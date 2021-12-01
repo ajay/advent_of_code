@@ -4,8 +4,8 @@
 #include <string_view>
 #include <vector>
 
-template<class T>
-std::vector<T> readFile(const std::string& filename) {
+template<class T = size_t>
+std::vector<T> readFile(const std::string& filename = "input.txt") {
     std::vector<T> data{};
 
     std::ifstream file{filename};
@@ -19,9 +19,9 @@ std::vector<T> readFile(const std::string& filename) {
 }
 
 size_t part1() {
-    const auto data = readFile<size_t>("input.txt");
+    const auto data = readFile();
 
-    size_t increases = 0U;
+    size_t increases = 0;
     for (size_t i = 1; i < data.size(); ++i) {
         if (data[i] > data[i-1]) {
             ++increases;
@@ -32,9 +32,9 @@ size_t part1() {
 }
 
 size_t part2() {
-    const auto data = readFile<size_t>("input.txt");
+    const auto data = readFile();
 
-    size_t increases = 0U;
+    size_t increases = 0;
     for (size_t i = 1; i < data.size()-2; ++i) {
         const size_t sum1 = data[i-1] + data[i] + data[i+1];
         const size_t sum2 = data[i] + data[i+1] + data[i+2];
