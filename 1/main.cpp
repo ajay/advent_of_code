@@ -1,5 +1,5 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -23,7 +23,7 @@ size_t part1() {
 
     size_t increases = 0;
     for (size_t i = 1; i < data.size(); ++i) {
-        if (data[i] > data[i-1]) {
+        if (data[i] > data[i - 1]) {
             ++increases;
         }
     }
@@ -35,9 +35,9 @@ size_t part2() {
     const auto data = readFile();
 
     size_t increases = 0;
-    for (size_t i = 1; i < data.size()-2; ++i) {
-        const size_t sum1 = data[i-1] + data[i] + data[i+1];
-        const size_t sum2 = data[i] + data[i+1] + data[i+2];
+    for (size_t i = 1; i < data.size() - 2; ++i) {
+        const size_t sum1 = data[i - 1] + data[i] + data[i + 1];
+        const size_t sum2 = data[i] + data[i + 1] + data[i + 2];
 
         if (sum2 > sum1) {
             ++increases;

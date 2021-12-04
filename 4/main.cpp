@@ -2,7 +2,6 @@
 #include <bitset>
 #include <cassert>
 #include <fstream>
-#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <map>
@@ -23,8 +22,7 @@ std::vector<std::string> split(const std::string& str, const std::string& delim 
     size_t start = 0;
     size_t end = 0;
 
-    while ((start = str.find_first_not_of(delim, end)) != std::string::npos)
-    {
+    while ((start = str.find_first_not_of(delim, end)) != std::string::npos) {
         end = str.find(delim, start);
         v.push_back(str.substr(start, end - start));
     }
@@ -35,7 +33,7 @@ std::vector<std::string> split(const std::string& str, const std::string& delim 
 std::vector<size_t> strVecToNumVec(const std::vector<std::string>& strVec) {
     std::vector<size_t> numVec{};
 
-    std::transform(strVec.begin(), strVec.end(), std::back_inserter(numVec), [] (const auto& s) {
+    std::transform(strVec.begin(), strVec.end(), std::back_inserter(numVec), [](const auto& s) {
         return std::stoi(s);
     });
 
@@ -57,7 +55,7 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
 }
 
 class BingoBoard final {
-public:
+  public:
     BingoBoard(const std::string& str) {
         const auto lines = split(str, "\n");
         for (const auto& line : lines) {
@@ -70,21 +68,20 @@ public:
         bool status = false;
 
         // rows
-        for (const auto& row: board) {
-            status |= std::all_of(row.begin(), row.end(), [&moves] (const auto& e) {
+        for (const auto& row : board) {
+            status |= std::all_of(row.begin(), row.end(), [&moves](const auto& e) {
                 return std::find(moves.begin(), moves.end(), e) != moves.end();
             });
         }
 
         // cols
         for (size_t col = 0; col < board.size(); ++col) {
-
             std::vector<size_t> column{};
             for (size_t row = 0; row < board.size(); ++row) {
                 column.emplace_back(board[row][col]);
             }
 
-            status |= std::all_of(column.begin(), column.end(), [&moves] (const auto& e) {
+            status |= std::all_of(column.begin(), column.end(), [&moves](const auto& e) {
                 return std::find(moves.begin(), moves.end(), e) != moves.end();
             });
         }
@@ -96,7 +93,7 @@ public:
         size_t sum = 0;
 
         for (const auto& line : board) {
-            sum += std::accumulate(line.begin(), line.end(), 0UL, [&moves] (const auto& a, const auto& num) {
+            sum += std::accumulate(line.begin(), line.end(), 0UL, [&moves](const auto& a, const auto& num) {
                 return std::find(moves.begin(), moves.end(), num) != moves.end() ? a : (a + num);
             });
         }
@@ -115,7 +112,7 @@ public:
         return s.str();
     }
 
-private:
+  private:
     std::vector<std::vector<size_t>> board;
 };
 
@@ -131,7 +128,7 @@ std::pair<std::vector<size_t>, std::vector<BingoBoard>> parseFile() {
     const auto moves = strVecToNumVec(movesStr);
 
     std::vector<BingoBoard> boards{};
-    std::for_each(std::next(data.begin()), data.end(), [&boards] (const auto& b) {
+    std::for_each(std::next(data.begin()), data.end(), [&boards](const auto& b) {
         boards.emplace_back(b);
     });
 
@@ -143,7 +140,7 @@ size_t part1() {
 
     // std::cout << "\nmoves:\n" << moves << '\n';
 
-    for(size_t i = 1; i < moves.size(); ++i) {
+    for (size_t i = 1; i < moves.size(); ++i) {
         std::vector<size_t> subMoves{moves.begin(), std::next(moves.begin(), static_cast<ssize_t>(i))};
 
         for (const auto& b : boards) {
@@ -163,17 +160,17 @@ size_t part2() {
     const auto [moves, boards] = parseFile();
 
     size_t i = 0;
-    for(i = 1; i < moves.size(); ++i) {
+    for (i = 1; i < moves.size(); ++i) {
         std::vector<size_t> subMoves{moves.begin(), std::next(moves.begin(), static_cast<ssize_t>(i))};
-        if (std::all_of(boards.begin(), boards.end(), [&subMoves] (const auto& b) {
-            return b.checkWin(subMoves);
-        })) {
+        if (std::all_of(boards.begin(), boards.end(), [&subMoves](const auto& b) {
+                return b.checkWin(subMoves);
+            })) {
             // std::cout << "found all winners " << i << '\n';
             break;
         }
     }
 
-    std::vector<size_t> subMoves{moves.begin(), std::next(moves.begin(), static_cast<ssize_t>(i-1))};
+    std::vector<size_t> subMoves{moves.begin(), std::next(moves.begin(), static_cast<ssize_t>(i - 1))};
     for (const auto& b : boards) {
         if (!b.checkWin(subMoves)) {
             std::vector<size_t> subMovesWin{moves.begin(), std::next(moves.begin(), static_cast<ssize_t>(i))};

@@ -38,7 +38,7 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
     }
     s << '}';
 
-    return os << s.str();;
+    return os << s.str();
 }
 
 size_t part1() {
@@ -73,12 +73,12 @@ size_t part2() {
 
     auto nums = data;
     for (size_t bit = (kNumBits - 1); (nums.size() > 1) && (bit >= 0); --bit) {
-        const size_t ones = std::count_if(nums.begin(), nums.end(), [&bit] (const auto& n) {
+        const size_t ones = std::count_if(nums.begin(), nums.end(), [&bit](const auto& n) {
             return n & (1 << bit);
         });
 
         const bool one = (ones >= (nums.size() / 2));
-        std::erase_if(nums, [&] (const auto& n) {
+        std::erase_if(nums, [&](const auto& n) {
             const auto b = (n & (1 << bit));
             return one ? !b : b;
         });
@@ -88,12 +88,12 @@ size_t part2() {
 
     nums = data;
     for (size_t bit = (kNumBits - 1); (nums.size() > 1) && (bit >= 0); --bit) {
-        const size_t ones = std::count_if(nums.begin(), nums.end(), [&bit] (const auto& n) {
+        const size_t ones = std::count_if(nums.begin(), nums.end(), [&bit](const auto& n) {
             return (n & (1 << bit));
         });
 
         const bool one = (ones >= (nums.size() / 2));
-        std::erase_if(nums, [&] (const auto& n) {
+        std::erase_if(nums, [&](const auto& n) {
             const auto b = (n & (1 << bit));
             return one ? b : !b;
         });
