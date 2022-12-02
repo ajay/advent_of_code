@@ -113,7 +113,7 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
 ////////////////////////////////////////////////////////////////////////////////
 // file IO / string parsing
 
-std::string readFile(const std::string& filename = "input.txt") {
+std::string readFile(const std::string& filename) {
     std::ifstream file{filename};
     return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
 }
@@ -166,8 +166,8 @@ std::vector<size_t> strToNumVec(const std::string& str) {
 ////////////////////////////////////////////////////////////////////////////////
 // aoc
 
-std::vector<std::pair<char, char>> parseFile() {
-    const auto raw = readFile();
+std::vector<std::pair<char, char>> parseFile(bool example = false) {
+    const auto raw = readFile(example ? "example.txt" : "input.txt");
     const auto lines = split(raw, "\n");
 
     std::vector<std::pair<char, char>> turns{};
