@@ -197,8 +197,8 @@ size_t priority(std::vector<char> ch) {
     return priority(*duplicates.begin());
 }
 
-size_t part1() {
-    const std::vector<std::vector<char>> sacks{parseFile()};
+size_t part1(bool example = false) {
+    const std::vector<std::vector<char>> sacks{parseFile(example)};
 
     size_t sum{};
     for (const auto& sack : sacks) {
@@ -219,8 +219,8 @@ size_t part1() {
     return sum;
 }
 
-size_t part2() {
-    std::vector<std::vector<char>> sacks{parseFile()};
+size_t part2(bool example = false) {
+    std::vector<std::vector<char>> sacks{parseFile(example)};
     assert(sacks.size() % 3 == 0);
 
     size_t sum{};
@@ -248,11 +248,21 @@ size_t part2() {
 }
 
 int main() {
-    const auto p1 = part1();
-    std::cout << "part1: " << p1 << '\n';
-    assert(p1 == 8349);
+    const auto run{[](size_t part, const auto& fn, bool example, size_t expected) {
+        const auto result{fn(example)};
 
-    const auto p2 = part2();
-    std::cout << "part2: " << p2 << '\n';
-    assert(p2 == 2681);
+        const auto str{"part" + std::to_string(part) + (example ? " example: " : " input:   ") +
+                       std::to_string(result) + '\n'};
+        std::cout << str;
+
+        if (result != expected) {
+            const auto errStr{"result (" + std::to_string(result) + ") != expected (" + std::to_string(expected) + ")"};
+            throw std::runtime_error(errStr);
+        }
+    }};
+
+    run(1, part1, true, 157);
+    run(1, part1, false, 8349);
+    run(2, part2, true, 70);
+    run(2, part2, false, 2681);
 }
