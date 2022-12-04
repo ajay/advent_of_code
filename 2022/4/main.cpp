@@ -176,14 +176,12 @@ std::vector<std::pair<std::pair<size_t, size_t>, std::pair<size_t, size_t>>> par
         assert(pair.size() == 2);
 
         const auto left = split(pair[0], "-");
-        assert(left.size() == 2);
-
         const auto right = split(pair[1], "-");
+        assert(left.size() == 2);
         assert(right.size() == 2);
 
-        std::pair<std::pair<size_t, size_t>, std::pair<size_t, size_t>> p{{std::stoul(left[0]), std::stoul(left[1])},
-                                                                          {std::stoul(right[0]), std::stoul(right[1])}};
-        return p;
+        return std::pair<std::pair<size_t, size_t>, std::pair<size_t, size_t>>{
+            {std::stoul(left[0]), std::stoul(left[1])}, {std::stoul(right[0]), std::stoul(right[1])}};
     });
 
     return pairs;
