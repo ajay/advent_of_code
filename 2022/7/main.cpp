@@ -208,22 +208,14 @@ struct Directory {
     std::vector<Directory> dirs{};
     std::map<std::string, size_t> files{};
 
-    void print(std::ostream& os, size_t indent = 0) const {
-        const auto addIndent{[&os, &indent]() {
-            for (size_t i = 0; i < indent; ++i) {
-                os << ' ';
-            }
-        }};
-        addIndent();
-
-        os << "- " << name << " (dir)\n";
+    void print(std::ostream& os, size_t level = 0, size_t indent = 2) const {
+        os << std::string(level * indent, ' ') << "- " << name << " (dir)\n";
         for (const auto& d : dirs) {
-            d.print(os, indent + 2);
+            d.print(os, level + 1);
         }
 
         for (const auto& f : files) {
-            addIndent();
-            os << "  - " << f.first << " (file, size=" << f.second << ")\n";
+            os << std::string((level + 1) * indent, ' ') << "- " << f.first << " (file, size=" << f.second << ")\n";
         }
     }
 
