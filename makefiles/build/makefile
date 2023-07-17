@@ -1,11 +1,22 @@
 ################################################################################
 
+PROJECT_NAME = $(notdir $(CURDIR))
+
+$(info )
+$(info PROJECT=$(PROJECT_NAME))
+$(info )
+
+################################################################################
+
 SHELL = bash
 
+MAKECMDGOALS ?=
+
 MAKEFLAGS += -rR                        # do not use make's built-in rules and variables
+MAKEFLAGS += -j                         # parallel processing
 MAKEFLAGS += -k                         # keep going on errors
+MAKEFLAGS += --output-sync=recurse      # group output messages per recursive make call
 MAKEFLAGS += --warn-undefined-variables
-MAKEFLAGS += --output-sync=target       # group output messages per target
 
 ifeq ($(MAKECMDGOALS), rebuild)
 	MAKEFLAGS += -B                     # always make
@@ -26,6 +37,7 @@ ifeq ($(verbose), true)
 	Q =
 else
 	Q = @
+	MAKEFLAGS += --no-print-directory
 endif
 
 ################################################################################
@@ -52,12 +64,6 @@ LDFLAGS = -pie
 LIBS =
 
 ################################################################################
-
-PROJECT_NAME = $(notdir $(CURDIR))
-
-$(info )
-$(info PROJECT=$(PROJECT_NAME))
-$(info )
 
 SOURCE_DIR = src
 BUILD_DIR = build
