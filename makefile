@@ -16,9 +16,9 @@ ci: lint
 	$(Q) $(MAKE) run verbose=true
 
 lint:
-	$(Q) find . -type f \( -iname '*.h' -o -iname '*.cpp' \) -exec clang-format --Werror --dry-run \{\} \+
+	$(Q) find . -type f \( -iname '*.h' -o -iname '*.cpp' \) -exec clang-format --style=Chromium --Werror --dry-run \{\} \+
 
 format:
-	$(Q) find . -type f \( -iname '*.h' -o -iname '*.cpp' \) -exec clang-format --Werror -i \{\} \+
+	$(Q) find . -type f \( -iname '*.h' -o -iname '*.cpp' \) -exec clang-format --style=Chromium --Werror -i \{\} \+
 
 ################################################################################
