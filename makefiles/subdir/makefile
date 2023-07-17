@@ -46,7 +46,7 @@ SUB_TARGET_DIRS := $(realpath $(dir $(shell find -L . -mindepth 2 -maxdepth 2 -n
 
 ################################################################################
 
-.PHONY: all help $(SUB_TARGET_DIRS)  run clean rebuild
+.PHONY: all help $(SUB_TARGET_DIRS) run clean rebuild
 
 all: $(SUB_TARGET_DIRS)
 
@@ -67,9 +67,6 @@ help::
 
 
 $(SUB_TARGET_DIRS):
-ifndef MAKECMDGOALS
-	$(eval MAKECMDGOALS=)
-endif
 	$(Q) $(MAKE) -C $@ $(MAKECMDGOALS)
 
 run clean rebuild: all
