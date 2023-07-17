@@ -58,10 +58,13 @@ CFLAGS += -fgnu89-inline
 
 CXXFLAGS  = -std=gnu++2b
 CXXFLAGS += -Wno-c++98-compat
+CXXFLAGS += -Wno-c++98-compat-pedantic
 
 LDFLAGS = -pie
 
 LIBS =
+
+RUN_FLAGS =
 
 ################################################################################
 
@@ -128,7 +131,7 @@ $(TARGET): $(OBJS)
 
 run: $(TARGET)
 	$(Q) $(ECHO) '(RUN)' $<
-	$(Q) $(TARGET)
+	$(Q) $(TARGET) $(RUN_FLAGS)
 
 clean:
 	$(Q) rm -rf $(BUILD_DIR)
