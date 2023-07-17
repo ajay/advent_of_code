@@ -20,249 +20,259 @@
 ////////////////////////////////////////////////////////////////////////////////
 // printing
 
-template<typename Test, template<typename...> class Ref>
+template <typename Test, template <typename...> class Ref>
 struct is_specialization : std::false_type {};
 
-template<template<typename...> class Ref, typename... Args>
+template <template <typename...> class Ref, typename... Args>
 struct is_specialization<Ref<Args...>, Ref> : std::true_type {};
 
-template<class T>
+template <class T>
 std::ostream& operator<<(std::ostream& os, const std::vector<T>& v);
 
-template<class T>
+template <class T>
 std::ostream& operator<<(std::ostream& os, const std::set<T>& v);
 
-template<class P1, class P2>
+template <class P1, class P2>
 std::ostream& operator<<(std::ostream& os, const std::pair<P1, P2>& p);
 
-template<class T>
+template <class T>
 std::ostream& operator<<(std::ostream& os, const std::optional<T>& o) {
-    if (o) {
-        os << *o;
-    } else {
-        os << "std::nullopt";
-    }
+  if (o) {
+    os << *o;
+  } else {
+    os << "std::nullopt";
+  }
 
-    return os;
+  return os;
 }
 
-template<class K, class V>
+template <class K, class V>
 std::ostream& operator<<(std::ostream& os, const std::map<K, V>& m) {
-    std::stringstream s{};
+  std::stringstream s{};
 
-    s << "{\n";
-    for (const auto& [key, value] : m) {
-        s << "  { " << key << ", " << value << " },\n";
-    }
-    s << "}\n";
+  s << "{\n";
+  for (const auto& [key, value] : m) {
+    s << "  { " << key << ", " << value << " },\n";
+  }
+  s << "}\n";
 
-    return os << s.str();
+  return os << s.str();
 }
 
-template<class K, class V>
+template <class K, class V>
 std::ostream& operator<<(std::ostream& os, const std::unordered_map<K, V>& m) {
-    std::stringstream s{};
+  std::stringstream s{};
 
-    s << "{\n";
-    for (const auto& [key, value] : m) {
-        s << "  { " << key << ", " << value << " },\n";
-    }
-    s << "}\n";
+  s << "{\n";
+  for (const auto& [key, value] : m) {
+    s << "  { " << key << ", " << value << " },\n";
+  }
+  s << "}\n";
 
-    return os << s.str();
+  return os << s.str();
 }
 
-template<class P1, class P2>
+template <class P1, class P2>
 std::ostream& operator<<(std::ostream& os, const std::pair<P1, P2>& p) {
-    const auto& [one, two] = p;
+  const auto& [one, two] = p;
 
-    std::stringstream s{};
-    s << "{ " << one << ", " << two << " }\n";
+  std::stringstream s{};
+  s << "{ " << one << ", " << two << " }\n";
 
-    return os << s.str();
+  return os << s.str();
 }
 
-template<class T>
+template <class T>
 std::ostream& operator<<(std::ostream& os, const std::set<T>& v) {
-    constexpr auto delim = is_specialization<T, std::set>::value ? '\n' : ' ';
-    std::stringstream s{};
+  constexpr auto delim = is_specialization<T, std::set>::value ? '\n' : ' ';
+  std::stringstream s{};
 
-    s << '{' << delim;
-    for (const auto& e : v) {
-        s << e << delim;
-    }
-    s << '}';
+  s << '{' << delim;
+  for (const auto& e : v) {
+    s << e << delim;
+  }
+  s << '}';
 
-    return os << s.str();
+  return os << s.str();
 }
 
-template<class T>
+template <class T>
 std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
-    constexpr auto delim = is_specialization<T, std::vector>::value ? '\n' : ' ';
-    std::stringstream s{};
+  constexpr auto delim = is_specialization<T, std::vector>::value ? '\n' : ' ';
+  std::stringstream s{};
 
-    s << '{' << delim;
-    for (const auto& e : v) {
-        s << e << delim;
-    }
-    s << '}';
+  s << '{' << delim;
+  for (const auto& e : v) {
+    s << e << delim;
+  }
+  s << '}';
 
-    return os << s.str();
+  return os << s.str();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // file IO / string parsing
 
 std::string readFile(const std::string& filename) {
-    std::ifstream file{filename};
-    return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
+  std::ifstream file{filename};
+  return {(std::istreambuf_iterator<char>(file)),
+          std::istreambuf_iterator<char>()};
 }
 
-std::vector<std::string> split(const std::string& str, const std::string& delim = " ") {
-    std::vector<std::string> v{};
-    size_t begin = 0;
-    size_t end = 0;
+std::vector<std::string> split(const std::string& str,
+                               const std::string& delim = " ") {
+  std::vector<std::string> v{};
+  size_t begin = 0;
+  size_t end = 0;
 
-    while ((begin = str.find_first_not_of(delim, end)) != std::string::npos) {
-        end = str.find(delim, begin);
-        v.push_back(str.substr(begin, end - begin));
-    }
+  while ((begin = str.find_first_not_of(delim, end)) != std::string::npos) {
+    end = str.find(delim, begin);
+    v.push_back(str.substr(begin, end - begin));
+  }
 
-    return v;
+  return v;
 }
 
 std::vector<size_t> strVecToNumVec(const std::vector<std::string>& strVec) {
-    std::vector<size_t> numVec{};
+  std::vector<size_t> numVec{};
 
-    std::transform(strVec.begin(), strVec.end(), std::back_inserter(numVec), [](const std::string& s) {
-        return std::stoul(s);
-    });
+  std::transform(strVec.begin(), strVec.end(), std::back_inserter(numVec),
+                 [](const std::string& s) { return std::stoul(s); });
 
-    return numVec;
+  return numVec;
 }
 
-std::pair<std::string, std::string> strVecToStrPair(const std::vector<std::string>& strVec) {
-    assert(strVec.size() == 2);
-    return {strVec[0], strVec[1]};
+std::pair<std::string, std::string> strVecToStrPair(
+    const std::vector<std::string>& strVec) {
+  assert(strVec.size() == 2);
+  return {strVec[0], strVec[1]};
 }
 
-std::pair<size_t, size_t> strVecToNumPair(const std::vector<std::string>& strVec) {
-    const auto v = strVecToNumVec(strVec);
-    assert(v.size() == 2);
-    return {v[0], v[1]};
+std::pair<size_t, size_t> strVecToNumPair(
+    const std::vector<std::string>& strVec) {
+  const auto v = strVecToNumVec(strVec);
+  assert(v.size() == 2);
+  return {v[0], v[1]};
 }
 
 std::vector<size_t> strToNumVec(const std::string& str) {
-    const std::vector<char> digits{str.begin(), str.end()};
+  const std::vector<char> digits{str.begin(), str.end()};
 
-    std::vector<std::string> digitsStr{};
-    std::transform(digits.begin(), digits.end(), std::back_inserter(digitsStr), [](const char& c) {
-        return std::string(1, c);
-    });
+  std::vector<std::string> digitsStr{};
+  std::transform(digits.begin(), digits.end(), std::back_inserter(digitsStr),
+                 [](const char& c) { return std::string(1, c); });
 
-    return strVecToNumVec(digitsStr);
+  return strVecToNumVec(digitsStr);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // aoc
 
 std::vector<std::vector<char>> parseFile(bool example = false) {
-    const auto raw = readFile(example ? "example.txt" : "input.txt");
-    const auto lines = split(raw, "\n");
+  const auto raw = readFile(example ? "example.txt" : "input.txt");
+  const auto lines = split(raw, "\n");
 
-    std::vector<std::vector<char>> sacks{};
-    std::transform(lines.begin(), lines.end(), std::back_inserter(sacks), [](const auto& line) {
-        std::vector<char> items{};
-        std::transform(line.begin(), line.end(), std::back_inserter(items), [](const auto& item) {
-            return item;
-        });
-        return items;
-    });
+  std::vector<std::vector<char>> sacks{};
+  std::transform(lines.begin(), lines.end(), std::back_inserter(sacks),
+                 [](const auto& line) {
+                   std::vector<char> items{};
+                   std::transform(line.begin(), line.end(),
+                                  std::back_inserter(items),
+                                  [](const auto& item) { return item; });
+                   return items;
+                 });
 
-    return sacks;
+  return sacks;
 }
 
 size_t priority(char ch) {
-    const auto c{static_cast<size_t>(ch)};
-    if (c > 'Z') {
-        return (1 + c - 'a');
-    } else {
-        return (1 + c - 'A' + 26);
-    }
+  const auto c{static_cast<size_t>(ch)};
+  if (c > 'Z') {
+    return (1 + c - 'a');
+  } else {
+    return (1 + c - 'A' + 26);
+  }
 }
 
 size_t priority(std::vector<char> ch) {
-    const std::set<char> duplicates{ch.begin(), ch.end()};
-    assert(duplicates.size() == 1);
-    return priority(*duplicates.begin());
+  const std::set<char> duplicates{ch.begin(), ch.end()};
+  assert(duplicates.size() == 1);
+  return priority(*duplicates.begin());
 }
 
 size_t part1(bool example = false) {
-    const std::vector<std::vector<char>> sacks{parseFile(example)};
+  const std::vector<std::vector<char>> sacks{parseFile(example)};
 
-    size_t sum{};
-    for (const auto& sack : sacks) {
-        assert(sack.size() % 2 == 0);
+  size_t sum{};
+  for (const auto& sack : sacks) {
+    assert(sack.size() % 2 == 0);
 
-        std::vector<char> first(sack.begin(), std::next(sack.begin(), sack.size() / 2));
-        std::vector<char> second(std::next(sack.begin(), sack.size() / 2), sack.end());
+    std::vector<char> first(sack.begin(),
+                            std::next(sack.begin(), sack.size() / 2));
+    std::vector<char> second(std::next(sack.begin(), sack.size() / 2),
+                             sack.end());
 
-        std::sort(first.begin(), first.end());
-        std::sort(second.begin(), second.end());
+    std::sort(first.begin(), first.end());
+    std::sort(second.begin(), second.end());
 
-        std::vector<char> duplicates{};
-        std::set_intersection(first.begin(), first.end(), second.begin(), second.end(), std::back_inserter(duplicates));
+    std::vector<char> duplicates{};
+    std::set_intersection(first.begin(), first.end(), second.begin(),
+                          second.end(), std::back_inserter(duplicates));
 
-        sum += priority(duplicates);
-    }
+    sum += priority(duplicates);
+  }
 
-    return sum;
+  return sum;
 }
 
 size_t part2(bool example = false) {
-    std::vector<std::vector<char>> sacks{parseFile(example)};
-    assert(sacks.size() % 3 == 0);
+  std::vector<std::vector<char>> sacks{parseFile(example)};
+  assert(sacks.size() % 3 == 0);
 
-    size_t sum{};
-    for (size_t i = 0; i < sacks.size(); i += 3) {
-        auto& first{sacks[i]};
-        auto& second{sacks[i + 1]};
-        auto& third{sacks[i + 2]};
+  size_t sum{};
+  for (size_t i = 0; i < sacks.size(); i += 3) {
+    auto& first{sacks[i]};
+    auto& second{sacks[i + 1]};
+    auto& third{sacks[i + 2]};
 
-        std::sort(first.begin(), first.end());
-        std::sort(second.begin(), second.end());
-        std::sort(third.begin(), third.end());
+    std::sort(first.begin(), first.end());
+    std::sort(second.begin(), second.end());
+    std::sort(third.begin(), third.end());
 
-        std::vector<char> duplicates12{};
-        std::set_intersection(first.begin(), first.end(), second.begin(), second.end(),
-                              std::back_inserter(duplicates12));
+    std::vector<char> duplicates12{};
+    std::set_intersection(first.begin(), first.end(), second.begin(),
+                          second.end(), std::back_inserter(duplicates12));
 
-        std::vector<char> duplicates23{};
-        std::set_intersection(duplicates12.begin(), duplicates12.end(), third.begin(), third.end(),
-                              std::back_inserter(duplicates23));
+    std::vector<char> duplicates23{};
+    std::set_intersection(duplicates12.begin(), duplicates12.end(),
+                          third.begin(), third.end(),
+                          std::back_inserter(duplicates23));
 
-        sum += priority(duplicates23);
-    }
+    sum += priority(duplicates23);
+  }
 
-    return sum;
+  return sum;
 }
 
 int main() {
-    const auto run{[](size_t part, const auto& fn, bool example, size_t expected) {
+  const auto run{
+      [](size_t part, const auto& fn, bool example, size_t expected) {
         const auto result{fn(example)};
 
-        const auto str{"part" + std::to_string(part) + (example ? " example: " : " input:   ") +
+        const auto str{"part" + std::to_string(part) +
+                       (example ? " example: " : " input:   ") +
                        std::to_string(result) + '\n'};
         std::cout << str;
 
         if (result != expected) {
-            const auto errStr{"result (" + std::to_string(result) + ") != expected (" + std::to_string(expected) + ")"};
-            throw std::runtime_error(errStr);
+          const auto errStr{"result (" + std::to_string(result) +
+                            ") != expected (" + std::to_string(expected) + ")"};
+          throw std::runtime_error(errStr);
         }
-    }};
+      }};
 
-    run(1, part1, true, 157);
-    run(1, part1, false, 8349);
-    run(2, part2, true, 70);
-    run(2, part2, false, 2681);
+  run(1, part1, true, 157);
+  run(1, part1, false, 8349);
+  run(2, part2, true, 70);
+  run(2, part2, false, 2681);
 }
