@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-sudo apt install clang clang-format googletest libgtest-dev
+sudo apt install clang clang-format libfmt-dev googletest libgtest-dev

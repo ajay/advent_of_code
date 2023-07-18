@@ -62,7 +62,7 @@ CXXFLAGS += -Wno-c++98-compat-pedantic
 
 LDFLAGS = -pie
 
-LIBS =
+LIBS = -lfmt
 
 RUN_FLAGS =
 
