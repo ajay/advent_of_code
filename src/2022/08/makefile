@@ -1,1 +1,1 @@
-../../../makefiles/build/makefile
+../../../tools/makefiles/build/makefile

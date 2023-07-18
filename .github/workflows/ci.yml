@@ -8,6 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install OS deps
-        run: ./deps/os/ubuntu.sh
+        run: ./tools/deps/os/ubuntu.sh
       - name: Run CI
         run: make ci

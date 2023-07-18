@@ -4,10 +4,10 @@
 
 #### Fedora
 ```
-./deps/os/fedora.sh
+./tools/deps/os/fedora.sh
 ```
 
 #### Ubuntu
 ```
-./deps/os/ubuntu.sh
+./tools/deps/os/ubuntu.sh
 ```

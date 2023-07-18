@@ -1,1 +1,1 @@
-../makefiles/subdir/makefile
+../tools/makefiles/subdir/makefile
