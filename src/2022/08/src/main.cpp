@@ -159,8 +159,8 @@ std::string readFile(const std::string& filename) {
 // aoc
 
 std::vector<std::vector<size_t>> parseFile(bool example = false) {
-  const auto raw = readFile(example ? "example.txt" : "input.txt");
-  const auto lines = split(raw, "\n");
+  auto raw = readFile(example ? "example.txt" : "input.txt");
+  const auto lines = split(std::move(raw), "\n");
 
   std::vector<std::vector<size_t>> grid{};
   std::transform(

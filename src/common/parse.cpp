@@ -3,16 +3,18 @@
 #include <algorithm>
 #include <cassert>
 
-std::vector<std::string> split(const std::string& str,
-                               const std::string& delim) {
-  std::vector<std::string> v{};
-  size_t begin = 0;
-  size_t end = 0;
+#include <boost/algorithm/string.hpp>
 
-  while ((begin = str.find_first_not_of(delim, end)) != std::string::npos) {
-    end = str.find(delim, begin);
-    v.push_back(str.substr(begin, end - begin));
+std::vector<std::string> split(std::string&& str,
+                               const std::string& delim,
+                               bool trim) {
+  std::vector<std::string> v{};
+
+  if (trim) {
+    boost::trim(str);
   }
+
+  boost::split(v, str, boost::is_any_of(delim));
 
   return v;
 }

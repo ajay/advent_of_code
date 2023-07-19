@@ -1,8 +1,10 @@
 #include <string>
 #include <vector>
 
-std::vector<std::string> split(const std::string& str,
-                               const std::string& delim = " ");
+// Emulates python's split() function.
+std::vector<std::string> split(std::string&& str,
+                               const std::string& delim = " ",
+                               bool trim = true);
 
 std::vector<size_t> strVecToNumVec(const std::vector<std::string>& strVec);
 
