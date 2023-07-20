@@ -1,6 +1,6 @@
 ################################################################################
 
-include $(dir $(realpath $(MAKEFILE_LIST)))/../build/makefile
+include $(dir $(realpath $(MAKEFILE_LIST)))/../compile/makefile
 
 ################################################################################
 
