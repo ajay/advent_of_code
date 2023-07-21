@@ -68,23 +68,25 @@ RUN_FLAGS =
 
 ################################################################################
 
-SOURCE_DIR = src
 BUILD_DIR = build
-OBJECT_DIR = $(BUILD_DIR)/obj
+SRC_DIR = src
+OBJ_DIR = $(BUILD_DIR)/obj
 OUT_DIR = $(BUILD_DIR)/out
 
 ################################################################################
 
 SRC_FILE_EXTS = .asm .c .cpp
 
-INCLUDE_DIRS := -I$(SOURCE_DIR)
+INCLUDE_DIRS := -I$(SRC_DIR)
 
-OBJS         := $(sort                              \
-                $(addprefix $(OBJECT_DIR)/,         \
-                $(addsuffix .o,                     \
-                $(basename                          \
-                $(foreach ext, $(SRC_FILE_EXTS),    \
-                $(shell test -d $(SOURCE_DIR) && find -L $(SOURCE_DIR) -type f -name '*$(ext)' -printf '%P\n'))))))
+SRCS := $(foreach ext, $(SRC_FILE_EXTS),    \
+        $(shell test -d $(SRC_DIR) && find -L $(SRC_DIR) -type f -name '*$(ext)' -printf '%p\n'))
+
+OBJS := $(sort                              \
+        $(addprefix $(OBJ_DIR)/,            \
+        $(addsuffix .o,                     \
+        $(basename                          \
+		$(SRCS:$(SRC_DIR)/%=%)))))
 
 TARGET = $(OUT_DIR)/$(PROJECT_NAME)
 
@@ -109,17 +111,17 @@ help:
 	$(Q) $(ECHO) 'make help               - this info'
 	$(Q) $(ECHO)
 
-$(OBJECT_DIR)/%.o: $(SOURCE_DIR)/%.asm
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.asm
 	$(Q) $(ECHO) '(ASM)' $<
 	$(Q) mkdir -p $(@D)
 	$(Q) $(CC) -c $(CPPFLAGS) $(CFLAGS) -o $@ $<
 
-$(OBJECT_DIR)/%.o: $(SOURCE_DIR)/%.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(Q) $(ECHO) '(CC) ' $<
 	$(Q) mkdir -p $(@D)
 	$(Q) $(CC) -c $(CPPFLAGS) $(CFLAGS) -o $@ $<
 
-$(OBJECT_DIR)/%.o: $(SOURCE_DIR)/%.cpp
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(Q) $(ECHO) '(CXX)' $<
 	$(Q) mkdir -p $(@D)
 	$(Q) $(CXX) -c $(CPPFLAGS) $(CXXFLAGS) -o $@ $<
