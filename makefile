@@ -1,5 +1,6 @@
 ################################################################################
 
+include tools/makefiles/functions/makefile
 include tools/makefiles/subdir/makefile
 
 ################################################################################
@@ -19,8 +20,11 @@ help::
 	$(Q) $(ECHO)
 	$(Q) $(ECHO) 'make format             - format'
 	$(Q) $(ECHO)
+	$(Q) $(ECHO) 'make versions           - prints tool versions'
+	$(Q) $(ECHO)
 
 ci:
+	$(Q) $(MAKE) versions verbose=true
 	$(Q) $(MAKE) lint verbose=true
 	$(Q) $(MAKE) run verbose=true
 
@@ -29,5 +33,9 @@ lint:
 
 format:
 	$(Q) find . -type f \( -iname '*.h' -o -iname '*.cpp' \) -exec $(CXX_FORMATTER) $(CXX_FORMATTER_FLAGS) \{\} \+
+
+versions:
+	$(call print_tool_version,CXX_FORMATTER,$(CXX_FORMATTER))
+	$(Q) $(MAKE) -C tools/makefiles/compile versions verbose=true
 
 ################################################################################

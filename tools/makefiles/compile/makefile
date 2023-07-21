@@ -86,9 +86,13 @@ OBJS := $(sort                              \
         $(addprefix $(OBJ_DIR)/,            \
         $(addsuffix .o,                     \
         $(basename                          \
-		$(SRCS:$(SRC_DIR)/%=%)))))
+        $(SRCS:$(SRC_DIR)/%=%)))))
 
 TARGET = $(OUT_DIR)/$(PROJECT_NAME)
+
+################################################################################
+
+include $(dir $(realpath $(word 1,$(MAKEFILE_LIST))))/../functions/makefile
 
 ################################################################################
 
@@ -107,6 +111,8 @@ help:
 	$(Q) $(ECHO) 'make clean              - clean'
 	$(Q) $(ECHO)
 	$(Q) $(ECHO) 'make rebuild            - rebuild'
+	$(Q) $(ECHO)
+	$(Q) $(ECHO) 'make versions           - prints tool versions'
 	$(Q) $(ECHO)
 	$(Q) $(ECHO) 'make help               - this info'
 	$(Q) $(ECHO)
@@ -139,5 +145,9 @@ clean:
 	$(Q) rm -rf $(BUILD_DIR)
 
 rebuild: clean all
+
+versions:
+	$(call print_tool_version,CC,$(CC))
+	$(call print_tool_version,CXX,$(CXX))
 
 -include $(OBJS:.o=.d) # compiler generated dependency info
