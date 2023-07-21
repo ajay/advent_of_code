@@ -139,3 +139,5 @@ clean:
 	$(Q) rm -rf $(BUILD_DIR)
 
 rebuild: clean all
+
+-include $(OBJS:.o=.d) # compiler generated dependency info
