@@ -49,6 +49,7 @@ CPPFLAGS  = -MMD
 CPPFLAGS += -Wall
 CPPFLAGS += -Werror
 CPPFLAGS += -Weverything
+CPPFLAGS += -Wno-gnu-zero-variadic-macro-arguments
 CPPFLAGS += -Wno-missing-prototypes
 CPPFLAGS += -fPIC
 CPPFLAGS += $(INCLUDE_DIRS)
