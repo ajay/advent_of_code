@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install OS deps
-        run: ./tools/deps/os/ubuntu.sh
+      - name: Install deps
+        run: make install-deps
       - name: Run CI
         run: make ci

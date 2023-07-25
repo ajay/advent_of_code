@@ -13,7 +13,13 @@ CXX_FORMATTER_FLAGS += -i
 
 ################################################################################
 
+OS := $(shell lsb_release --id | awk '{print $$3}' | tr A-Z a-z)
+
+################################################################################
+
 help::
+	$(Q) $(ECHO) 'make install-deps       - install deps'
+	$(Q) $(ECHO)
 	$(Q) $(ECHO) 'make ci                 - ci'
 	$(Q) $(ECHO)
 	$(Q) $(ECHO) 'make lint               - lint'
@@ -22,6 +28,10 @@ help::
 	$(Q) $(ECHO)
 	$(Q) $(ECHO) 'make versions           - prints tool versions'
 	$(Q) $(ECHO)
+
+install-deps:
+	$(Q) tools/deps/os/$(OS).sh
+	$(Q) python3 -m pip install -r tools/deps/python/requirements.txt
 
 ci:
 	$(Q) $(MAKE) versions verbose=true
