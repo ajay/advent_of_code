@@ -7,9 +7,18 @@ include tools/makefiles/subdir/makefile
 
 CXX_FORMATTER = $(shell command -v clang-format-15 &> /dev/null && echo "clang-format-15" || echo "clang-format")
 
-CXX_FORMATTER_FLAGS  = --style=Chromium
+CXX_FORMATTER_FLAGS += --style=Chromium
 CXX_FORMATTER_FLAGS += --Werror
 CXX_FORMATTER_FLAGS += -i
+
+PYTHON_FORMATTER = python3 -m black
+
+PYTHON_FORMATTER_FLAGS +=
+
+ifneq ($(findstring lint, $(MAKECMDGOALS)),)
+	CXX_FORMATTER_FLAGS += --dry-run
+	PYTHON_FORMATTER_FLAGS += --check
+endif
 
 ################################################################################
 
@@ -38,14 +47,16 @@ ci:
 	$(Q) $(MAKE) lint verbose=true
 	$(Q) $(MAKE) run verbose=true
 
-lint:
-	$(Q) find . -type f \( -iname '*.h' -o -iname '*.cpp' \) -exec $(CXX_FORMATTER) $(CXX_FORMATTER_FLAGS) --dry-run \{\} \+
-
-format:
+lint: _lint_cxx _lint_python
+format: _format_cxx _format_python
+_lint_cxx _format_cxx:
 	$(Q) find . -type f \( -iname '*.h' -o -iname '*.cpp' \) -exec $(CXX_FORMATTER) $(CXX_FORMATTER_FLAGS) \{\} \+
+_lint_python _format_python:
+	$(Q) find . -type f -name '*.py' -exec $(PYTHON_FORMATTER) $(PYTHON_FORMATTER_FLAGS) \{\} \+
 
 versions:
 	$(call print_tool_version,CXX_FORMATTER,$(CXX_FORMATTER))
+	$(call print_tool_version,PYTHON_FORMATTER,$(PYTHON_FORMATTER))
 	$(Q) $(MAKE) -C tools/makefiles/compile versions verbose=true
 
 ################################################################################
