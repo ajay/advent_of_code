@@ -37,6 +37,32 @@ help::
 	$(Q) $(ECHO)
 	$(Q) $(ECHO) 'make versions           - prints tool versions'
 	$(Q) $(ECHO)
+	$(Q) $(ECHO) 'make setup-day          - sets up a skeleton for an aoc day'
+	$(Q) $(ECHO) '  year=<XXXX>           - required, integer'
+	$(Q) $(ECHO) '  day=<XX>              - required, integer'
+	$(Q) $(ECHO)
+
+################################################################################
+
+year ?=
+day ?=
+
+ifeq ($(MAKECMDGOALS),setup-day)
+
+ifeq ($(year),)
+$(error $(MAKECMDGOALS): year is required)
+endif
+
+ifeq ($(day),)
+$(error $(MAKECMDGOALS): day is required)
+endif
+
+endif
+
+setup-day:
+	$(Q) tools/scripts/aoc_setup_day.py --year $(year) --day $(day) --repo-root-path $(shell git rev-parse --show-toplevel)
+
+################################################################################
 
 install-deps:
 	$(Q) tools/deps/os/$(OS).sh
