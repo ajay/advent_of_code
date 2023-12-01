@@ -13,7 +13,7 @@ SHELL = bash
 MAKECMDGOALS ?=
 
 MAKEFLAGS += -rR                        # do not use make's built-in rules and variables
-MAKEFLAGS += -j                         # parallel processing
+MAKEFLAGS += -j$(shell nproc)           # parallel processing
 MAKEFLAGS += -k                         # keep going on errors
 MAKEFLAGS += --output-sync=recurse      # group output messages per recursive make call
 MAKEFLAGS += --warn-undefined-variables
