@@ -42,8 +42,8 @@ endif
 
 ################################################################################
 
-CC  = clang-15
-CXX = clang++-15
+CC  = clang-16
+CXX = clang++-16
 
 CPPFLAGS  = -MMD
 CPPFLAGS += -Wall
