@@ -12,6 +12,8 @@ SHELL = bash
 
 MAKECMDGOALS ?=
 
+GNUMAKEFLAGS ?=
+MAKEFLAGS ?=
 MAKEFLAGS += -rR                        # do not use make's built-in rules and variables
 MAKEFLAGS += -j$(shell nproc)           # parallel processing
 MAKEFLAGS += -k                         # keep going on errors
