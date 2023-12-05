@@ -44,14 +44,12 @@ template <class P1, class P2>
 std::ostream& operator<<(std::ostream& os, const std::pair<P1, P2>& p);
 
 template <size_t n, typename... T>
-typename std::enable_if<(n >= sizeof...(T))>::type print_tuple(
-    std::ostream&,
-    const std::tuple<T...>&) {}
+typename std::enable_if<(n >= sizeof...(T))>::type print_tuple(std::ostream&,
+                                                               const std::tuple<T...>&) {}
 
 template <size_t n, typename... T>
-typename std::enable_if<(n < sizeof...(T))>::type print_tuple(
-    std::ostream& os,
-    const std::tuple<T...>& t) {
+typename std::enable_if<(n < sizeof...(T))>::type print_tuple(std::ostream& os,
+                                                              const std::tuple<T...>& t) {
   if (n != 0) {
     os << ", ";
   }
@@ -149,12 +147,10 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
 
 std::string readFile(const std::string& filename) {
   std::ifstream file{filename};
-  return {(std::istreambuf_iterator<char>(file)),
-          std::istreambuf_iterator<char>()};
+  return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
 }
 
-std::vector<std::string> split(const std::string& str,
-                               const std::string& delim = " ") {
+std::vector<std::string> split(const std::string& str, const std::string& delim = " ") {
   std::vector<std::string> v{};
   size_t begin = 0;
   size_t end = 0;
@@ -176,14 +172,12 @@ std::vector<size_t> strVecToNumVec(const std::vector<std::string>& strVec) {
   return numVec;
 }
 
-std::pair<std::string, std::string> strVecToStrPair(
-    const std::vector<std::string>& strVec) {
+std::pair<std::string, std::string> strVecToStrPair(const std::vector<std::string>& strVec) {
   assert(strVec.size() == 2);
   return {strVec[0], strVec[1]};
 }
 
-std::pair<size_t, size_t> strVecToNumPair(
-    const std::vector<std::string>& strVec) {
+std::pair<size_t, size_t> strVecToNumPair(const std::vector<std::string>& strVec) {
   const auto v = strVecToNumVec(strVec);
   assert(v.size() == 2);
   return {v[0], v[1]};
@@ -202,37 +196,33 @@ std::vector<size_t> strToNumVec(const std::string& str) {
 ////////////////////////////////////////////////////////////////////////////////
 // aoc
 
-std::pair<std::vector<std::vector<char>>,
-          std::vector<std::tuple<size_t, size_t, size_t>>>
+std::pair<std::vector<std::vector<char>>, std::vector<std::tuple<size_t, size_t, size_t>>>
 parseFile(bool example = false) {
   const auto raw = readFile(example ? "example.txt" : "input.txt");
   const auto sections = split(raw, "\n\n");
   assert(sections.size() == 2);
 
   const auto stackLines = split(sections[0], "\n");
-  const auto& stackBottom = *std::next(
-      stackLines
-          .rbegin());  // bottom of stacks, assume each stack has at least 1
-  const auto numStacks = static_cast<size_t>(
-      std::count_if(stackBottom.begin(), stackBottom.end(),
-                    [](const auto& c) { return std::isalpha(c); }));
+  const auto& stackBottom =
+      *std::next(stackLines.rbegin());  // bottom of stacks, assume each stack has at least 1
+  const auto numStacks = static_cast<size_t>(std::count_if(
+      stackBottom.begin(), stackBottom.end(), [](const auto& c) { return std::isalpha(c); }));
   std::vector<std::vector<char>> stacks(numStacks);
 
   // skip last line (stack indexes), second last to first
-  std::for_each(std::next(stackLines.rbegin()), stackLines.rend(),
-                [&stacks, &numStacks](const auto& line) {
-                  for (size_t i = 0; i < numStacks; ++i) {
-                    if (const auto idx{(i * 4) + 1};
-                        (idx < line.size()) && std::isalpha(line[idx])) {
-                      stacks[i].emplace_back(line[idx]);
-                    }
-                  }
-                });
+  std::for_each(
+      std::next(stackLines.rbegin()), stackLines.rend(), [&stacks, &numStacks](const auto& line) {
+        for (size_t i = 0; i < numStacks; ++i) {
+          if (const auto idx{(i * 4) + 1}; (idx < line.size()) && std::isalpha(line[idx])) {
+            stacks[i].emplace_back(line[idx]);
+          }
+        }
+      });
 
   const auto procedureLines = split(sections[1], "\n");
   std::vector<std::tuple<size_t, size_t, size_t>> procedure{};
-  std::transform(procedureLines.begin(), procedureLines.end(),
-                 std::back_inserter(procedure), [](const auto& line) {
+  std::transform(procedureLines.begin(), procedureLines.end(), std::back_inserter(procedure),
+                 [](const auto& line) {
                    const auto splitLine = split(line);
                    assert(splitLine.size() == 6);
                    const auto num = std::stoull(splitLine[1]);
@@ -255,15 +245,13 @@ std::string topOfStacks(bool example, bool moveTogether) {
     assert(num <= stacks[from].size());
 
     if (moveTogether) {
-      const auto begin =
-          std::prev(stacks[from].end(), static_cast<ssize_t>(num));
+      const auto begin = std::prev(stacks[from].end(), static_cast<ssize_t>(num));
       const auto end = stacks[from].end();
       std::copy(begin, end, std::back_inserter(stacks[to]));
       stacks[from].erase(begin, end);
     } else {
       const auto begin = stacks[from].rbegin();
-      const auto end =
-          std::next(stacks[from].rbegin(), static_cast<ssize_t>(num));
+      const auto end = std::next(stacks[from].rbegin(), static_cast<ssize_t>(num));
       std::copy(begin, end, std::back_inserter(stacks[to]));
       stacks[from].erase(end.base(), begin.base());
     }
@@ -285,21 +273,19 @@ std::string part2(bool example) {
 }
 
 int main() {
-  const auto run{
-      [](size_t part, const auto& fn, bool example, const auto& expected) {
-        const auto result{fn(example)};
+  const auto run{[](size_t part, const auto& fn, bool example, const auto& expected) {
+    const auto result{fn(example)};
 
-        const auto str{"part" + std::to_string(part) +
-                       (example ? " example: " : " input:   ") +
-                       std::to_string(result) + '\n'};
-        std::cout << str;
+    const auto str{"part" + std::to_string(part) + (example ? " example: " : " input:   ") +
+                   std::to_string(result) + '\n'};
+    std::cout << str;
 
-        if (result != expected) {
-          const auto errStr{"result (" + std::to_string(result) +
-                            ") != expected (" + std::to_string(expected) + ")"};
-          throw std::runtime_error(errStr);
-        }
-      }};
+    if (result != expected) {
+      const auto errStr{"result (" + std::to_string(result) + ") != expected (" +
+                        std::to_string(expected) + ")"};
+      throw std::runtime_error(errStr);
+    }
+  }};
 
   run(1, part1, true, std::string{"CMZ"});
   run(1, part1, false, std::string{"GRTSWNJHH"});

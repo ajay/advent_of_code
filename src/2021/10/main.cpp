@@ -16,12 +16,10 @@
 
 std::string readFile(const std::string& filename = "input.txt") {
   std::ifstream file{filename};
-  return {(std::istreambuf_iterator<char>(file)),
-          std::istreambuf_iterator<char>()};
+  return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
 }
 
-std::vector<std::string> split(const std::string& str,
-                               const std::string& delim = " ") {
+std::vector<std::string> split(const std::string& str, const std::string& delim = " ") {
   std::vector<std::string> v{};
   size_t start = 0;
   size_t end = 0;

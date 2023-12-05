@@ -19,8 +19,7 @@ ssize_t deliver(const std::string& path, ssize_t targetFloor = 0) {
     } else if (move == ')') {
       --floor;
     } else {
-      throw std::invalid_argument(
-          fmt::format("Unexpected character: {}", move));
+      throw std::invalid_argument(fmt::format("Unexpected character: {}", move));
     }
 
     if (targetFloor && (targetFloor == floor)) {

@@ -14,12 +14,10 @@
 
 std::string readFile(const std::string& filename = "input.txt") {
   std::ifstream file{filename};
-  return {(std::istreambuf_iterator<char>(file)),
-          std::istreambuf_iterator<char>()};
+  return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
 }
 
-std::vector<std::string> split(const std::string& str,
-                               const std::string& delim = " ") {
+std::vector<std::string> split(const std::string& str, const std::string& delim = " ") {
   std::vector<std::string> v{};
   size_t start = 0;
   size_t end = 0;
@@ -82,10 +80,9 @@ class BingoBoard final {
         column.emplace_back(board[row][col]);
       }
 
-      status |=
-          std::all_of(column.begin(), column.end(), [&moves](const auto& e) {
-            return std::find(moves.begin(), moves.end(), e) != moves.end();
-          });
+      status |= std::all_of(column.begin(), column.end(), [&moves](const auto& e) {
+        return std::find(moves.begin(), moves.end(), e) != moves.end();
+      });
     }
 
     return status;
@@ -95,13 +92,10 @@ class BingoBoard final {
     size_t sum = 0;
 
     for (const auto& line : board) {
-      sum += std::accumulate(line.begin(), line.end(), 0UL,
-                             [&moves](const auto& a, const auto& num) {
-                               return std::find(moves.begin(), moves.end(),
-                                                num) != moves.end()
-                                          ? a
-                                          : (a + num);
-                             });
+      sum +=
+          std::accumulate(line.begin(), line.end(), 0UL, [&moves](const auto& a, const auto& num) {
+            return std::find(moves.begin(), moves.end(), num) != moves.end() ? a : (a + num);
+          });
     }
 
     return sum;
@@ -146,8 +140,7 @@ size_t part1() {
   // std::cout << "\nmoves:\n" << moves << '\n';
 
   for (size_t i = 1; i < moves.size(); ++i) {
-    std::vector<size_t> subMoves{
-        moves.begin(), std::next(moves.begin(), static_cast<ssize_t>(i))};
+    std::vector<size_t> subMoves{moves.begin(), std::next(moves.begin(), static_cast<ssize_t>(i))};
 
     for (const auto& b : boards) {
       if (b.checkWin(subMoves)) {
@@ -167,22 +160,20 @@ size_t part2() {
 
   size_t i = 0;
   for (i = 1; i < moves.size(); ++i) {
-    std::vector<size_t> subMoves{
-        moves.begin(), std::next(moves.begin(), static_cast<ssize_t>(i))};
-    if (std::all_of(boards.begin(), boards.end(), [&subMoves](const auto& b) {
-          return b.checkWin(subMoves);
-        })) {
+    std::vector<size_t> subMoves{moves.begin(), std::next(moves.begin(), static_cast<ssize_t>(i))};
+    if (std::all_of(boards.begin(), boards.end(),
+                    [&subMoves](const auto& b) { return b.checkWin(subMoves); })) {
       // std::cout << "found all winners " << i << '\n';
       break;
     }
   }
 
-  std::vector<size_t> subMoves{
-      moves.begin(), std::next(moves.begin(), static_cast<ssize_t>(i - 1))};
+  std::vector<size_t> subMoves{moves.begin(),
+                               std::next(moves.begin(), static_cast<ssize_t>(i - 1))};
   for (const auto& b : boards) {
     if (!b.checkWin(subMoves)) {
-      std::vector<size_t> subMovesWin{
-          moves.begin(), std::next(moves.begin(), static_cast<ssize_t>(i))};
+      std::vector<size_t> subMovesWin{moves.begin(),
+                                      std::next(moves.begin(), static_cast<ssize_t>(i))};
       return b.sumUnmarked(subMovesWin) * subMovesWin.back();
     }
   }

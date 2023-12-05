@@ -4,8 +4,7 @@
 #include <string_view>
 #include <vector>
 
-std::vector<std::pair<std::string, size_t>> readFile(
-    const std::string& filename = "input.txt") {
+std::vector<std::pair<std::string, size_t>> readFile(const std::string& filename = "input.txt") {
   std::vector<std::pair<std::string, size_t>> data{};
 
   std::ifstream file{filename};

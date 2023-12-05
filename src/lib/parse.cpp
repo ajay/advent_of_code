@@ -5,9 +5,7 @@
 
 #include <boost/algorithm/string.hpp>
 
-std::vector<std::string> split(std::string&& str,
-                               const std::string& delim,
-                               bool trim) {
+std::vector<std::string> split(std::string&& str, const std::string& delim, bool trim) {
   std::vector<std::string> v{};
 
   if (trim) {

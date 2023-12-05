@@ -22,17 +22,14 @@ std::pair<std::pair<char, ssize_t>, std::pair<char, ssize_t>> firstAndLastDigit(
   constexpr std::string_view kDigits{"0123456789"};
 
   std::pair<std::pair<char, ssize_t>, std::pair<char, ssize_t>> ret{
-      {0, std::numeric_limits<ssize_t>::max()},
-      {0, std::numeric_limits<ssize_t>::min()}};
+      {0, std::numeric_limits<ssize_t>::max()}, {0, std::numeric_limits<ssize_t>::min()}};
   auto& [first, last] = ret;
 
-  if (const auto firstOf = s.find_first_of(kDigits);
-      firstOf != std::string::npos) {
+  if (const auto firstOf = s.find_first_of(kDigits); firstOf != std::string::npos) {
     first = {s[firstOf], firstOf};
   }
 
-  if (const auto lastOf = s.find_last_of(kDigits);
-      lastOf != std::string::npos) {
+  if (const auto lastOf = s.find_last_of(kDigits); lastOf != std::string::npos) {
     last = {s[lastOf], lastOf};
   }
 
@@ -47,8 +44,7 @@ std::pair<std::pair<char, ssize_t>, std::pair<char, ssize_t>> firstAndLastWord(
   constexpr char kBaseOrdinal = '1';
 
   std::pair<std::pair<char, ssize_t>, std::pair<char, ssize_t>> ret{
-      {0, std::numeric_limits<ssize_t>::max()},
-      {0, std::numeric_limits<ssize_t>::min()}};
+      {0, std::numeric_limits<ssize_t>::max()}, {0, std::numeric_limits<ssize_t>::min()}};
   auto& [first, last] = ret;
 
   for (size_t i = 0; !first.first && (i < s.size()); ++i) {
@@ -75,32 +71,30 @@ std::pair<std::pair<char, ssize_t>, std::pair<char, ssize_t>> firstAndLastWord(
 size_t solve(const std::string& path, bool stringsAsNumbers = false) {
   const auto lines = readFile(path);
   std::vector<size_t> nums{};
-  std::transform(
-      lines.begin(), lines.end(), std::back_inserter(nums),
-      [&stringsAsNumbers](const auto& line) {
-        char first{};
-        char last{};
-        const auto& [firstDigit, lastDigit] = firstAndLastDigit(line);
-        const auto& [firstDigitChar, firstDigitIdx] = firstDigit;
-        const auto& [lastDigitChar, lastDigitIdx] = lastDigit;
+  std::transform(lines.begin(), lines.end(), std::back_inserter(nums),
+                 [&stringsAsNumbers](const auto& line) {
+                   char first{};
+                   char last{};
+                   const auto& [firstDigit, lastDigit] = firstAndLastDigit(line);
+                   const auto& [firstDigitChar, firstDigitIdx] = firstDigit;
+                   const auto& [lastDigitChar, lastDigitIdx] = lastDigit;
 
-        if (!stringsAsNumbers) {
-          first = firstDigitChar;
-          last = lastDigitChar;
-        } else {
-          const auto& [firstWord, lastWord] = firstAndLastWord(line);
-          const auto& [firstWordChar, firstWordIdx] = firstWord;
-          const auto& [lastWordChar, lastWordIdx] = lastWord;
+                   if (!stringsAsNumbers) {
+                     first = firstDigitChar;
+                     last = lastDigitChar;
+                   } else {
+                     const auto& [firstWord, lastWord] = firstAndLastWord(line);
+                     const auto& [firstWordChar, firstWordIdx] = firstWord;
+                     const auto& [lastWordChar, lastWordIdx] = lastWord;
 
-          first =
-              (firstDigitIdx < firstWordIdx) ? firstDigitChar : firstWordChar;
-          last = ((lastDigitIdx > lastWordIdx) ? lastDigitChar : lastWordChar);
-        }
+                     first = (firstDigitIdx < firstWordIdx) ? firstDigitChar : firstWordChar;
+                     last = ((lastDigitIdx > lastWordIdx) ? lastDigitChar : lastWordChar);
+                   }
 
-        // fmt::print("Line: {}, first: {}, last: {}\n", line, first, last);
+                   // fmt::print("Line: {}, first: {}, last: {}\n", line, first, last);
 
-        return std::stoull(std::string{first} + last);
-      });
+                   return std::stoull(std::string{first} + last);
+                 });
 
   return std::accumulate(nums.begin(), nums.end(), 0UL);
 }

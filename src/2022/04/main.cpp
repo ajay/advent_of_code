@@ -115,12 +115,10 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
 
 std::string readFile(const std::string& filename) {
   std::ifstream file{filename};
-  return {(std::istreambuf_iterator<char>(file)),
-          std::istreambuf_iterator<char>()};
+  return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
 }
 
-std::vector<std::string> split(const std::string& str,
-                               const std::string& delim = " ") {
+std::vector<std::string> split(const std::string& str, const std::string& delim = " ") {
   std::vector<std::string> v{};
   size_t begin = 0;
   size_t end = 0;
@@ -142,14 +140,12 @@ std::vector<size_t> strVecToNumVec(const std::vector<std::string>& strVec) {
   return numVec;
 }
 
-std::pair<std::string, std::string> strVecToStrPair(
-    const std::vector<std::string>& strVec) {
+std::pair<std::string, std::string> strVecToStrPair(const std::vector<std::string>& strVec) {
   assert(strVec.size() == 2);
   return {strVec[0], strVec[1]};
 }
 
-std::pair<size_t, size_t> strVecToNumPair(
-    const std::vector<std::string>& strVec) {
+std::pair<size_t, size_t> strVecToNumPair(const std::vector<std::string>& strVec) {
   const auto v = strVecToNumVec(strVec);
   assert(v.size() == 2);
   return {v[0], v[1]};
@@ -168,28 +164,24 @@ std::vector<size_t> strToNumVec(const std::string& str) {
 ////////////////////////////////////////////////////////////////////////////////
 // aoc
 
-std::vector<std::pair<std::pair<size_t, size_t>, std::pair<size_t, size_t>>>
-parseFile(bool example = false) {
+std::vector<std::pair<std::pair<size_t, size_t>, std::pair<size_t, size_t>>> parseFile(
+    bool example = false) {
   const auto raw = readFile(example ? "example.txt" : "input.txt");
   const auto lines = split(raw, "\n");
 
-  std::vector<std::pair<std::pair<size_t, size_t>, std::pair<size_t, size_t>>>
-      pairs{};
-  std::transform(
-      lines.begin(), lines.end(), std::back_inserter(pairs),
-      [](const auto& line) {
-        const auto pair = split(line, ",");
-        assert(pair.size() == 2);
+  std::vector<std::pair<std::pair<size_t, size_t>, std::pair<size_t, size_t>>> pairs{};
+  std::transform(lines.begin(), lines.end(), std::back_inserter(pairs), [](const auto& line) {
+    const auto pair = split(line, ",");
+    assert(pair.size() == 2);
 
-        const auto left = split(pair[0], "-");
-        const auto right = split(pair[1], "-");
-        assert(left.size() == 2);
-        assert(right.size() == 2);
+    const auto left = split(pair[0], "-");
+    const auto right = split(pair[1], "-");
+    assert(left.size() == 2);
+    assert(right.size() == 2);
 
-        return std::pair<std::pair<size_t, size_t>, std::pair<size_t, size_t>>{
-            {std::stoul(left[0]), std::stoul(left[1])},
-            {std::stoul(right[0]), std::stoul(right[1])}};
-      });
+    return std::pair<std::pair<size_t, size_t>, std::pair<size_t, size_t>>{
+        {std::stoul(left[0]), std::stoul(left[1])}, {std::stoul(right[0]), std::stoul(right[1])}};
+  });
 
   return pairs;
 }
@@ -236,21 +228,19 @@ size_t part2(bool example) {
 }
 
 int main() {
-  const auto run{
-      [](size_t part, const auto& fn, bool example, size_t expected) {
-        const auto result{fn(example)};
+  const auto run{[](size_t part, const auto& fn, bool example, size_t expected) {
+    const auto result{fn(example)};
 
-        const auto str{"part" + std::to_string(part) +
-                       (example ? " example: " : " input:   ") +
-                       std::to_string(result) + '\n'};
-        std::cout << str;
+    const auto str{"part" + std::to_string(part) + (example ? " example: " : " input:   ") +
+                   std::to_string(result) + '\n'};
+    std::cout << str;
 
-        if (result != expected) {
-          const auto errStr{"result (" + std::to_string(result) +
-                            ") != expected (" + std::to_string(expected) + ")"};
-          throw std::runtime_error(errStr);
-        }
-      }};
+    if (result != expected) {
+      const auto errStr{"result (" + std::to_string(result) + ") != expected (" +
+                        std::to_string(expected) + ")"};
+      throw std::runtime_error(errStr);
+    }
+  }};
 
   run(1, part1, true, 2);
   run(1, part1, false, 498);

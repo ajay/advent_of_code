@@ -14,12 +14,11 @@ void run_(const std::source_location& location,
           const std::string& pathInput = "data/input.txt") {
   const auto result = fn(example ? pathExample : pathInput);
 
-  fmt::print("{}({}) part {:d} {:<8} {}\n", location.file_name(),
-             location.line(), part, (example ? "example:" : "input:"), result);
+  fmt::print("{}({}) part {:d} {:<8} {}\n", location.file_name(), location.line(), part,
+             (example ? "example:" : "input:"), result);
 
   if (result != expected) {
-    const auto error =
-        fmt::format("result ({}) != expected ({})", result, expected);
+    const auto error = fmt::format("result ({}) != expected ({})", result, expected);
     throw std::runtime_error(error);
   }
 }

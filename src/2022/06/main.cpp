@@ -44,14 +44,12 @@ template <class P1, class P2>
 std::ostream& operator<<(std::ostream& os, const std::pair<P1, P2>& p);
 
 template <size_t n, typename... T>
-typename std::enable_if<(n >= sizeof...(T))>::type print_tuple(
-    std::ostream&,
-    const std::tuple<T...>&) {}
+typename std::enable_if<(n >= sizeof...(T))>::type print_tuple(std::ostream&,
+                                                               const std::tuple<T...>&) {}
 
 template <size_t n, typename... T>
-typename std::enable_if<(n < sizeof...(T))>::type print_tuple(
-    std::ostream& os,
-    const std::tuple<T...>& t) {
+typename std::enable_if<(n < sizeof...(T))>::type print_tuple(std::ostream& os,
+                                                              const std::tuple<T...>& t) {
   if (n != 0) {
     os << ", ";
   }
@@ -149,12 +147,10 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
 
 std::string readFile(const std::string& filename) {
   std::ifstream file{filename};
-  return {(std::istreambuf_iterator<char>(file)),
-          std::istreambuf_iterator<char>()};
+  return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
 }
 
-std::vector<std::string> split(const std::string& str,
-                               const std::string& delim = " ") {
+std::vector<std::string> split(const std::string& str, const std::string& delim = " ") {
   std::vector<std::string> v{};
   size_t begin = 0;
   size_t end = 0;
@@ -176,14 +172,12 @@ std::vector<size_t> strVecToNumVec(const std::vector<std::string>& strVec) {
   return numVec;
 }
 
-std::pair<std::string, std::string> strVecToStrPair(
-    const std::vector<std::string>& strVec) {
+std::pair<std::string, std::string> strVecToStrPair(const std::vector<std::string>& strVec) {
   assert(strVec.size() == 2);
   return {strVec[0], strVec[1]};
 }
 
-std::pair<size_t, size_t> strVecToNumPair(
-    const std::vector<std::string>& strVec) {
+std::pair<size_t, size_t> strVecToNumPair(const std::vector<std::string>& strVec) {
   const auto v = strVecToNumVec(strVec);
   assert(v.size() == 2);
   return {v[0], v[1]};
@@ -213,9 +207,8 @@ ssize_t findUnique(bool example, size_t count) {
 
   ssize_t index = -1;
   for (size_t i = count; (index < 0) && (i < data.size()); ++i) {
-    const auto set =
-        std::set(std::next(data.begin(), static_cast<ssize_t>(i - count)),
-                 std::next(data.begin(), static_cast<ssize_t>(i)));
+    const auto set = std::set(std::next(data.begin(), static_cast<ssize_t>(i - count)),
+                              std::next(data.begin(), static_cast<ssize_t>(i)));
     if (set.size() == count) {
       index = static_cast<ssize_t>(i);
     }
@@ -233,21 +226,19 @@ ssize_t part2(bool example) {
 }
 
 int main() {
-  const auto run{
-      [](size_t part, const auto& fn, bool example, const auto& expected) {
-        const auto result{fn(example)};
+  const auto run{[](size_t part, const auto& fn, bool example, const auto& expected) {
+    const auto result{fn(example)};
 
-        const auto str{"part" + std::to_string(part) +
-                       (example ? " example: " : " input:   ") +
-                       std::to_string(result) + '\n'};
-        std::cout << str;
+    const auto str{"part" + std::to_string(part) + (example ? " example: " : " input:   ") +
+                   std::to_string(result) + '\n'};
+    std::cout << str;
 
-        if (result != expected) {
-          const auto errStr{"result (" + std::to_string(result) +
-                            ") != expected (" + std::to_string(expected) + ")"};
-          throw std::runtime_error(errStr);
-        }
-      }};
+    if (result != expected) {
+      const auto errStr{"result (" + std::to_string(result) + ") != expected (" +
+                        std::to_string(expected) + ")"};
+      throw std::runtime_error(errStr);
+    }
+  }};
 
   run(1, part1, true, 7L);
   run(1, part1, false, 1625L);

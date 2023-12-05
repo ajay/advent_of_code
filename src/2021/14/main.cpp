@@ -99,12 +99,10 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
 
 std::string readFile(const std::string& filename = "input.txt") {
   std::ifstream file{filename};
-  return {(std::istreambuf_iterator<char>(file)),
-          std::istreambuf_iterator<char>()};
+  return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
 }
 
-std::vector<std::string> split(const std::string& str,
-                               const std::string& delim = " ") {
+std::vector<std::string> split(const std::string& str, const std::string& delim = " ") {
   std::vector<std::string> v{};
   size_t start = 0;
   size_t end = 0;
@@ -126,14 +124,12 @@ std::vector<size_t> strVecToNumVec(const std::vector<std::string>& strVec) {
   return numVec;
 }
 
-std::pair<std::string, std::string> strVecToStrPair(
-    const std::vector<std::string>& strVec) {
+std::pair<std::string, std::string> strVecToStrPair(const std::vector<std::string>& strVec) {
   assert(strVec.size() == 2);
   return {strVec[0], strVec[1]};
 }
 
-std::pair<size_t, size_t> strVecToNumPair(
-    const std::vector<std::string>& strVec) {
+std::pair<size_t, size_t> strVecToNumPair(const std::vector<std::string>& strVec) {
   const auto v = strVecToNumVec(strVec);
   assert(v.size() == 2);
   return {v[0], v[1]};
@@ -231,10 +227,8 @@ size_t part1(size_t steps = 10) {
       if (const auto it = rules.find(pair); it != rules.end()) {
         const auto& [pair_, ch] = *it;
 
-        const auto insert = [&newPairs,
-                             &countPair = countPair](const std::string& s) {
-          if (const auto newPairIt = newPairs.find(s);
-              newPairIt != newPairs.end()) {
+        const auto insert = [&newPairs, &countPair = countPair](const std::string& s) {
+          if (const auto newPairIt = newPairs.find(s); newPairIt != newPairs.end()) {
             auto& [newPair, count] = *newPairIt;
             count += countPair;
           } else {
@@ -286,15 +280,11 @@ size_t part1(size_t steps = 10) {
   // std::cout << histogram << std::endl;
 
   return std::max_element(histogram.begin(), histogram.end(),
-                          [](const auto& p1, const auto& p2) {
-                            return p1.second < p2.second;
-                          })
+                          [](const auto& p1, const auto& p2) { return p1.second < p2.second; })
              ->second -
-         std::min_element(histogram.begin(), histogram.end(),
-                          [](const auto& p1, const auto& p2) {
-                            return p1.second < p2.second;
-                          })
-             ->second;
+         std::min_element(histogram.begin(), histogram.end(), [](const auto& p1, const auto& p2) {
+           return p1.second < p2.second;
+         })->second;
 }
 
 size_t part2() {

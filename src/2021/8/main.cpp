@@ -16,12 +16,10 @@
 
 std::string readFile(const std::string& filename = "input.txt") {
   std::ifstream file{filename};
-  return {(std::istreambuf_iterator<char>(file)),
-          std::istreambuf_iterator<char>()};
+  return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
 }
 
-std::vector<std::string> split(const std::string& str,
-                               const std::string& delim = " ") {
+std::vector<std::string> split(const std::string& str, const std::string& delim = " ") {
   std::vector<std::string> v{};
   size_t start = 0;
   size_t end = 0;
@@ -89,13 +87,11 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
   return os << s.str();
 }
 
-std::vector<std::pair<std::vector<std::string>, std::vector<std::string>>>
-parseFile() {
+std::vector<std::pair<std::vector<std::string>, std::vector<std::string>>> parseFile() {
   const auto raw = readFile();
   const auto lines = split(raw, "\n");
 
-  std::vector<std::pair<std::vector<std::string>, std::vector<std::string>>>
-      data{};
+  std::vector<std::pair<std::vector<std::string>, std::vector<std::string>>> data{};
 
   for (const auto& line : lines) {
     const auto half = split(line, " | ");
@@ -309,35 +305,32 @@ size_t part2() {
     nums[8] = findWord(7);
 
     // numbers with shared length, but known intersections
-    const auto findWordIntersection =
-        [&left = left](size_t len, const std::vector<char>& intersect,
-                       size_t intersectLen) {
-          std::vector<char> chars{};
+    const auto findWordIntersection = [&left = left](size_t len, const std::vector<char>& intersect,
+                                                     size_t intersectLen) {
+      std::vector<char> chars{};
 
-          for (const auto& word : left) {
-            if (word.length() == len) {
-              std::vector<char> letters{word.begin(), word.end()};
-              std::sort(letters.begin(), letters.end());
+      for (const auto& word : left) {
+        if (word.length() == len) {
+          std::vector<char> letters{word.begin(), word.end()};
+          std::sort(letters.begin(), letters.end());
 
-              std::vector<char> intersection{};
+          std::vector<char> intersection{};
 
-              std::set_intersection(letters.begin(), letters.end(),
-                                    intersect.begin(), intersect.end(),
-                                    std::back_inserter(intersection));
-              // std::cout << "intersection: " << intersection << '\n';
+          std::set_intersection(letters.begin(), letters.end(), intersect.begin(), intersect.end(),
+                                std::back_inserter(intersection));
+          // std::cout << "intersection: " << intersection << '\n';
 
-              if (intersection.size() == intersectLen) {
-                chars = letters;
-              }
-            }
+          if (intersection.size() == intersectLen) {
+            chars = letters;
           }
+        }
+      }
 
-          return chars;
-        };
+      return chars;
+    };
 
     const auto findWordRemaining =
-        [&left = left](size_t len,
-                       const std::vector<std::vector<char>>& nonMatches) {
+        [&left = left](size_t len, const std::vector<std::vector<char>>& nonMatches) {
           std::vector<char> chars{};
 
           for (const auto& word : left) {
@@ -345,8 +338,7 @@ size_t part2() {
               std::vector<char> letters{word.begin(), word.end()};
               std::sort(letters.begin(), letters.end());
 
-              if (std::count(nonMatches.begin(), nonMatches.end(), letters) ==
-                  0) {
+              if (std::count(nonMatches.begin(), nonMatches.end(), letters) == 0) {
                 chars = letters;
               }
             }

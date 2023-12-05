@@ -6,8 +6,7 @@
 #include <gtest/gtest.h>
 
 TEST(ParseTest, split) {
-  constexpr auto test = [](std::string&& original,
-                           const std::vector<std::string>& expected,
+  constexpr auto test = [](std::string&& original, const std::vector<std::string>& expected,
                            const std::string& delim = " ") {
     EXPECT_EQ(split(std::move(original), delim), expected);
   };

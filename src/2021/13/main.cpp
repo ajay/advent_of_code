@@ -86,12 +86,10 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
 
 std::string readFile(const std::string& filename = "input.txt") {
   std::ifstream file{filename};
-  return {(std::istreambuf_iterator<char>(file)),
-          std::istreambuf_iterator<char>()};
+  return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
 }
 
-std::vector<std::string> split(const std::string& str,
-                               const std::string& delim = " ") {
+std::vector<std::string> split(const std::string& str, const std::string& delim = " ") {
   std::vector<std::string> v{};
   size_t start = 0;
   size_t end = 0;
@@ -113,14 +111,12 @@ std::vector<size_t> strVecToNumVec(const std::vector<std::string>& strVec) {
   return numVec;
 }
 
-std::pair<std::string, std::string> strVecToStrPair(
-    const std::vector<std::string>& strVec) {
+std::pair<std::string, std::string> strVecToStrPair(const std::vector<std::string>& strVec) {
   assert(strVec.size() == 2);
   return {strVec[0], strVec[1]};
 }
 
-std::pair<size_t, size_t> strVecToNumPair(
-    const std::vector<std::string>& strVec) {
+std::pair<size_t, size_t> strVecToNumPair(const std::vector<std::string>& strVec) {
   const auto v = strVecToNumVec(strVec);
   assert(v.size() == 2);
   return {v[0], v[1]};
@@ -139,8 +135,7 @@ std::vector<size_t> strToNumVec(const std::string& str) {
 ////////////////////////////////////////////////////////////////////////////////
 // aoc
 
-std::pair<std::vector<std::pair<size_t, size_t>>,
-          std::vector<std::pair<char, size_t>>>
+std::pair<std::vector<std::pair<size_t, size_t>>, std::vector<std::pair<char, size_t>>>
 parseFile() {
   const auto raw = readFile();
   const auto lines = split(raw, "\n\n");
@@ -171,17 +166,15 @@ parseFile() {
 size_t part1(size_t numFolds = 1, bool printGrid = false) {
   const auto [points, folds] = parseFile();
 
-  const size_t maxX = std::max_element(points.begin(), points.end(),
-                                       [](const auto& p1, const auto& p2) {
-                                         return p1.first < p2.first;
-                                       })
-                          ->first;
+  const size_t maxX =
+      std::max_element(points.begin(), points.end(), [](const auto& p1, const auto& p2) {
+        return p1.first < p2.first;
+      })->first;
 
-  const size_t maxY = std::max_element(points.begin(), points.end(),
-                                       [](const auto& p1, const auto& p2) {
-                                         return p1.second < p2.second;
-                                       })
-                          ->second;
+  const size_t maxY =
+      std::max_element(points.begin(), points.end(), [](const auto& p1, const auto& p2) {
+        return p1.second < p2.second;
+      })->second;
 
   std::vector<std::vector<bool>> grid(maxY + 1);
   for (auto& row : grid) {
@@ -236,13 +229,10 @@ size_t part1(size_t numFolds = 1, bool printGrid = false) {
     std::cout << grid << std::endl;
   }
 
-  return std::accumulate(
-      grid.begin(), grid.end(), 0UL, [](const auto& sum, const auto& row) {
-        return sum + std::accumulate(row.begin(), row.end(), 0UL,
-                                     [](const auto& sumRow, const auto& e) {
-                                       return sumRow + e;
-                                     });
-      });
+  return std::accumulate(grid.begin(), grid.end(), 0UL, [](const auto& sum, const auto& row) {
+    return sum + std::accumulate(row.begin(), row.end(), 0UL,
+                                 [](const auto& sumRow, const auto& e) { return sumRow + e; });
+  });
 }
 
 void part2() {

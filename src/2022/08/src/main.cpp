@@ -46,14 +46,12 @@ template <class P1, class P2>
 std::ostream& operator<<(std::ostream& os, const std::pair<P1, P2>& p);
 
 template <size_t n, typename... T>
-typename std::enable_if<(n >= sizeof...(T))>::type print_tuple(
-    std::ostream&,
-    const std::tuple<T...>&) {}
+typename std::enable_if<(n >= sizeof...(T))>::type print_tuple(std::ostream&,
+                                                               const std::tuple<T...>&) {}
 
 template <size_t n, typename... T>
-typename std::enable_if<(n < sizeof...(T))>::type print_tuple(
-    std::ostream& os,
-    const std::tuple<T...>& t) {
+typename std::enable_if<(n < sizeof...(T))>::type print_tuple(std::ostream& os,
+                                                              const std::tuple<T...>& t) {
   if (n != 0) {
     os << ", ";
   }
@@ -151,8 +149,7 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
 
 std::string readFile(const std::string& filename) {
   std::ifstream file{filename};
-  return {(std::istreambuf_iterator<char>(file)),
-          std::istreambuf_iterator<char>()};
+  return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -163,15 +160,12 @@ std::vector<std::vector<size_t>> parseFile(bool example = false) {
   const auto lines = split(std::move(raw), "\n");
 
   std::vector<std::vector<size_t>> grid{};
-  std::transform(
-      lines.begin(), lines.end(), std::back_inserter(grid),
-      [](const auto& line) {
-        std::vector<size_t> row{};
-        std::transform(
-            line.begin(), line.end(), std::back_inserter(row),
-            [](const auto& digit) { return std::stoull(std::string{digit}); });
-        return row;
-      });
+  std::transform(lines.begin(), lines.end(), std::back_inserter(grid), [](const auto& line) {
+    std::vector<size_t> row{};
+    std::transform(line.begin(), line.end(), std::back_inserter(row),
+                   [](const auto& digit) { return std::stoull(std::string{digit}); });
+    return row;
+  });
 
   assert(grid.size());
   for (size_t r = 0; r < grid.size(); ++r) {
@@ -181,9 +175,7 @@ std::vector<std::vector<size_t>> parseFile(bool example = false) {
   return grid;
 }
 
-bool visible(const std::vector<std::vector<size_t>>& grid,
-             size_t row,
-             size_t col) {
+bool visible(const std::vector<std::vector<size_t>>& grid, size_t row, size_t col) {
   const std::vector<std::pair<size_t, size_t>> increments{
       {-1, 0},  // decrement row, up
       {1, 0},   // increment row, down
@@ -198,8 +190,7 @@ bool visible(const std::vector<std::vector<size_t>>& grid,
     auto curRow = row + incRow;
     auto curCol = col + incCol;
 
-    while ((curRow < sizeRow) && (curCol < sizeCol) &&
-           (grid[curRow][curCol] < grid[row][col])) {
+    while ((curRow < sizeRow) && (curCol < sizeCol) && (grid[curRow][curCol] < grid[row][col])) {
       curRow += incRow;
       curCol += incCol;
     }
@@ -223,9 +214,7 @@ size_t countVisible(const std::vector<std::vector<size_t>>& grid) {
   return count;
 }
 
-size_t score(const std::vector<std::vector<size_t>>& grid,
-             size_t row,
-             size_t col) {
+size_t score(const std::vector<std::vector<size_t>>& grid, size_t row, size_t col) {
   const std::vector<std::pair<size_t, size_t>> increments{
       {-1, 0},  // decrement row, up
       {1, 0},   // increment row, down
@@ -282,21 +271,19 @@ size_t part2(bool example) {
 }
 
 int main() {
-  const auto run{
-      [](size_t part, const auto& fn, bool example, const auto& expected) {
-        const auto result{fn(example)};
+  const auto run{[](size_t part, const auto& fn, bool example, const auto& expected) {
+    const auto result{fn(example)};
 
-        const auto str{"part" + std::to_string(part) +
-                       (example ? " example: " : " input:   ") +
-                       std::to_string(result) + '\n'};
-        std::cout << str;
+    const auto str{"part" + std::to_string(part) + (example ? " example: " : " input:   ") +
+                   std::to_string(result) + '\n'};
+    std::cout << str;
 
-        if (result != expected) {
-          const auto errStr{"result (" + std::to_string(result) +
-                            ") != expected (" + std::to_string(expected) + ")"};
-          throw std::runtime_error(errStr);
-        }
-      }};
+    if (result != expected) {
+      const auto errStr{"result (" + std::to_string(result) + ") != expected (" +
+                        std::to_string(expected) + ")"};
+      throw std::runtime_error(errStr);
+    }
+  }};
 
   run(1, part1, true, 21UL);
   run(1, part1, false, 1805UL);

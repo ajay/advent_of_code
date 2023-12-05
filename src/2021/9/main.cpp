@@ -16,12 +16,10 @@
 
 std::string readFile(const std::string& filename = "input.txt") {
   std::ifstream file{filename};
-  return {(std::istreambuf_iterator<char>(file)),
-          std::istreambuf_iterator<char>()};
+  return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
 }
 
-std::vector<std::string> split(const std::string& str,
-                               const std::string& delim = " ") {
+std::vector<std::string> split(const std::string& str, const std::string& delim = " ") {
   std::vector<std::string> v{};
   size_t start = 0;
   size_t end = 0;
@@ -121,8 +119,7 @@ std::vector<std::vector<size_t>> parseFile() {
   return grid;
 }
 
-std::vector<std::pair<size_t, size_t>> getLowPoints(
-    const std::vector<std::vector<size_t>>& data) {
+std::vector<std::pair<size_t, size_t>> getLowPoints(const std::vector<std::vector<size_t>>& data) {
   std::vector<std::pair<size_t, size_t>> points{};
 
   for (size_t r = 0; r < data.size(); ++r) {
@@ -182,12 +179,11 @@ size_t part2() {
 
       const auto inBasin = [&data](const auto& p) {
         const auto& [r, c] = p;
-        return ((r >= 0) && (r < data.size()) && (c >= 0) &&
-                (c < data[r].size()) && (data[r][c] != 9));
+        return ((r >= 0) && (r < data.size()) && (c >= 0) && (c < data[r].size()) &&
+                (data[r][c] != 9));
       };
 
-      if ((std::count(seen.begin(), seen.end(), neighbor) == 0) &&
-          inBasin(neighbor)) {
+      if ((std::count(seen.begin(), seen.end(), neighbor) == 0) && inBasin(neighbor)) {
         ++size;
         seen.emplace(neighbor);
         const auto& [r, c] = neighbor;

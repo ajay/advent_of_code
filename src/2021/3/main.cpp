@@ -74,8 +74,7 @@ size_t part2() {
   auto nums = data;
   for (size_t bit = (kNumBits - 1); (nums.size() > 1) && (bit >= 0); --bit) {
     const size_t ones =
-        std::count_if(nums.begin(), nums.end(),
-                      [&bit](const auto& n) { return n & (1 << bit); });
+        std::count_if(nums.begin(), nums.end(), [&bit](const auto& n) { return n & (1 << bit); });
 
     const bool one = (ones >= (nums.size() / 2));
     std::erase_if(nums, [&](const auto& n) {
@@ -89,8 +88,7 @@ size_t part2() {
   nums = data;
   for (size_t bit = (kNumBits - 1); (nums.size() > 1) && (bit >= 0); --bit) {
     const size_t ones =
-        std::count_if(nums.begin(), nums.end(),
-                      [&bit](const auto& n) { return (n & (1 << bit)); });
+        std::count_if(nums.begin(), nums.end(), [&bit](const auto& n) { return (n & (1 << bit)); });
 
     const bool one = (ones >= (nums.size() / 2));
     std::erase_if(nums, [&](const auto& n) {

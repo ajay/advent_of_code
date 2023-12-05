@@ -14,12 +14,10 @@
 
 std::string readFile(const std::string& filename = "input.txt") {
   std::ifstream file{filename};
-  return {(std::istreambuf_iterator<char>(file)),
-          std::istreambuf_iterator<char>()};
+  return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
 }
 
-std::vector<std::string> split(const std::string& str,
-                               const std::string& delim = " ") {
+std::vector<std::string> split(const std::string& str, const std::string& delim = " ") {
   std::vector<std::string> v{};
   size_t start = 0;
   size_t end = 0;
@@ -71,10 +69,8 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
   return os << s.str();
 }
 
-std::vector<std::pair<std::pair<size_t, size_t>, std::pair<size_t, size_t>>>
-parseFile() {
-  std::vector<std::pair<std::pair<size_t, size_t>, std::pair<size_t, size_t>>>
-      points{};
+std::vector<std::pair<std::pair<size_t, size_t>, std::pair<size_t, size_t>>> parseFile() {
+  std::vector<std::pair<std::pair<size_t, size_t>, std::pair<size_t, size_t>>> points{};
 
   const auto raw = readFile();
   const auto lines = split(raw, "\n");
@@ -91,8 +87,7 @@ parseFile() {
 }
 
 size_t pointMax(
-    const std::vector<std::pair<std::pair<size_t, size_t>,
-                                std::pair<size_t, size_t>>>& points) {
+    const std::vector<std::pair<std::pair<size_t, size_t>, std::pair<size_t, size_t>>>& points) {
   size_t max = 0;
 
   for (const auto& pair : points) {
@@ -150,8 +145,7 @@ size_t part1(bool diagonals = false) {
         const size_t endX = std::max(x1, x2);
         const size_t endY = std::max(y1, y2);
 
-        for (size_t x = startX, y = startY; (x <= endX) && (y <= endY);
-             ++x, ++y) {
+        for (size_t x = startX, y = startY; (x <= endX) && (y <= endY); ++x, ++y) {
           ++map[x][y];
         }
       } else {
@@ -160,8 +154,7 @@ size_t part1(bool diagonals = false) {
         const size_t endX = std::max(x1, x2);
         const size_t endY = std::min(y1, y2);
 
-        for (size_t x = startX, y = startY; (x <= endX) && (y >= endY);
-             ++x, --y) {
+        for (size_t x = startX, y = startY; (x <= endX) && (y >= endY); ++x, --y) {
           ++map[x][y];
         }
       }
@@ -170,12 +163,10 @@ size_t part1(bool diagonals = false) {
 
   // std::cout << map;
 
-  return std::accumulate(
-      map.begin(), map.end(), 0UL, [](const size_t& sum, const auto& row) {
-        return sum + static_cast<size_t>(
-                         std::count_if(row.begin(), row.end(),
-                                       [](const auto& e) { return e > 1; }));
-      });
+  return std::accumulate(map.begin(), map.end(), 0UL, [](const size_t& sum, const auto& row) {
+    return sum + static_cast<size_t>(
+                     std::count_if(row.begin(), row.end(), [](const auto& e) { return e > 1; }));
+  });
 }
 
 size_t part2() {

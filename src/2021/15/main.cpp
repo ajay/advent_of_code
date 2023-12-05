@@ -103,12 +103,10 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
 
 std::string readFile(const std::string& filename = "input.txt") {
   std::ifstream file{filename};
-  return {(std::istreambuf_iterator<char>(file)),
-          std::istreambuf_iterator<char>()};
+  return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
 }
 
-std::vector<std::string> split(const std::string& str,
-                               const std::string& delim = " ") {
+std::vector<std::string> split(const std::string& str, const std::string& delim = " ") {
   std::vector<std::string> v{};
   size_t begin = 0;
   size_t end = 0;
@@ -130,14 +128,12 @@ std::vector<size_t> strVecToNumVec(const std::vector<std::string>& strVec) {
   return numVec;
 }
 
-std::pair<std::string, std::string> strVecToStrPair(
-    const std::vector<std::string>& strVec) {
+std::pair<std::string, std::string> strVecToStrPair(const std::vector<std::string>& strVec) {
   assert(strVec.size() == 2);
   return {strVec[0], strVec[1]};
 }
 
-std::pair<size_t, size_t> strVecToNumPair(
-    const std::vector<std::string>& strVec) {
+std::pair<size_t, size_t> strVecToNumPair(const std::vector<std::string>& strVec) {
   const auto v = strVecToNumVec(strVec);
   assert(v.size() == 2);
   return {v[0], v[1]};
@@ -165,8 +161,7 @@ std::optional<std::vector<Point>> aStar(
     const std::function<size_t(const Point&, const Point&)>& heuristic,
     const std::function<size_t(const Point&, const Point&)>& weight,
     const std::function<std::vector<Point>(const Point&)>& neighbors) {
-  const auto reconstructPath = [](const std::map<Point, Point>& cameFrom,
-                                  const Point& current) {
+  const auto reconstructPath = [](const std::map<Point, Point>& cameFrom, const Point& current) {
     std::vector<Point> path{current};
 
     auto it = cameFrom.find(current);
@@ -213,11 +208,9 @@ std::optional<std::vector<Point>> aStar(
   };
 
   while (openSet.size()) {
-    const auto current =
-        *std::min_element(openSet.begin(), openSet.end(),
-                          [&getFScore](const auto& p1, const auto& p2) {
-                            return getFScore(p1) < getFScore(p2);
-                          });
+    const auto current = *std::min_element(
+        openSet.begin(), openSet.end(),
+        [&getFScore](const auto& p1, const auto& p2) { return getFScore(p1) < getFScore(p2); });
 
     // std::cout << "current: (" << current.first << ", " << current.second <<
     // ")\n";
@@ -244,25 +237,23 @@ std::optional<std::vector<Point>> aStar(
   return {};
 }
 
-std::optional<std::vector<Point>> runAStar(
-    const std::vector<std::vector<size_t>>& grid,
-    const Point& start,
-    const Point& finish) {
+std::optional<std::vector<Point>> runAStar(const std::vector<std::vector<size_t>>& grid,
+                                           const Point& start,
+                                           const Point& finish) {
   const auto heuristic = [](const Point& current, const Point& goal) {
     // manhattan distance
     constexpr size_t movementCost = 1;
 
     const auto& [x1, y1] = current;
     const auto& [x2, y2] = goal;
-    const size_t dx = static_cast<size_t>(
-        std::abs(static_cast<ssize_t>(x1) - static_cast<ssize_t>(x2)));
-    const size_t dy = static_cast<size_t>(
-        std::abs(static_cast<ssize_t>(y1) - static_cast<ssize_t>(y2)));
+    const size_t dx =
+        static_cast<size_t>(std::abs(static_cast<ssize_t>(x1) - static_cast<ssize_t>(x2)));
+    const size_t dy =
+        static_cast<size_t>(std::abs(static_cast<ssize_t>(y1) - static_cast<ssize_t>(y2)));
     return movementCost * (dx + dy);
   };
 
-  const auto weight = [&grid](const Point& from [[gnu::unused]],
-                              const Point& to) {
+  const auto weight = [&grid](const Point& from [[gnu::unused]], const Point& to) {
     const auto& [x, y] = to;
     return grid[x][y];
   };
@@ -308,8 +299,7 @@ std::vector<std::vector<size_t>> parseFile() {
 size_t part1(const std::vector<std::vector<size_t>>& grid = parseFile()) {
   // std::cerr << "grid: " << grid << std::endl << std::endl;
 
-  const auto path =
-      runAStar(grid, {0, 0}, {(grid.size() - 1), (grid[0].size() - 1)});
+  const auto path = runAStar(grid, {0, 0}, {(grid.size() - 1), (grid[0].size() - 1)});
 
   // if (path) {
   //     std::cout << "path: \n" << *path << std::endl << std::endl;

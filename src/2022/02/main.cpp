@@ -115,12 +115,10 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
 
 std::string readFile(const std::string& filename) {
   std::ifstream file{filename};
-  return {(std::istreambuf_iterator<char>(file)),
-          std::istreambuf_iterator<char>()};
+  return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
 }
 
-std::vector<std::string> split(const std::string& str,
-                               const std::string& delim = " ") {
+std::vector<std::string> split(const std::string& str, const std::string& delim = " ") {
   std::vector<std::string> v{};
   size_t begin = 0;
   size_t end = 0;
@@ -142,14 +140,12 @@ std::vector<size_t> strVecToNumVec(const std::vector<std::string>& strVec) {
   return numVec;
 }
 
-std::pair<std::string, std::string> strVecToStrPair(
-    const std::vector<std::string>& strVec) {
+std::pair<std::string, std::string> strVecToStrPair(const std::vector<std::string>& strVec) {
   assert(strVec.size() == 2);
   return {strVec[0], strVec[1]};
 }
 
-std::pair<size_t, size_t> strVecToNumPair(
-    const std::vector<std::string>& strVec) {
+std::pair<size_t, size_t> strVecToNumPair(const std::vector<std::string>& strVec) {
   const auto v = strVecToNumVec(strVec);
   assert(v.size() == 2);
   return {v[0], v[1]};
@@ -173,14 +169,13 @@ std::vector<std::pair<char, char>> parseFile(bool example = false) {
   const auto lines = split(raw, "\n");
 
   std::vector<std::pair<char, char>> turns{};
-  std::transform(lines.begin(), lines.end(), std::back_inserter(turns),
-                 [](const auto& line) {
-                   const auto chars = split(line);
-                   assert(chars.size() == 2);
-                   assert(chars[0].size() == 1);
-                   assert(chars[1].size() == 1);
-                   return std::pair<char, char>{chars[0][0], chars[1][0]};
-                 });
+  std::transform(lines.begin(), lines.end(), std::back_inserter(turns), [](const auto& line) {
+    const auto chars = split(line);
+    assert(chars.size() == 2);
+    assert(chars[0].size() == 1);
+    assert(chars[1].size() == 1);
+    return std::pair<char, char>{chars[0][0], chars[1][0]};
+  });
 
   return turns;
 }

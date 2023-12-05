@@ -15,12 +15,10 @@
 
 std::string readFile(const std::string& filename = "input.txt") {
   std::ifstream file{filename};
-  return {(std::istreambuf_iterator<char>(file)),
-          std::istreambuf_iterator<char>()};
+  return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
 }
 
-std::vector<std::string> split(const std::string& str,
-                               const std::string& delim = " ") {
+std::vector<std::string> split(const std::string& str, const std::string& delim = " ") {
   std::vector<std::string> v{};
   size_t start = 0;
   size_t end = 0;
@@ -105,8 +103,8 @@ size_t part1(bool increasingCost = false) {
   for (auto& [position, sum] : positions) {
     size_t delta = 0;
     for (const auto& crab : crabs) {
-      const auto diff = static_cast<size_t>(std::abs(
-          static_cast<ssize_t>(crab) - static_cast<ssize_t>(position)));
+      const auto diff = static_cast<size_t>(
+          std::abs(static_cast<ssize_t>(crab) - static_cast<ssize_t>(position)));
 
       if (!increasingCost) {
         delta += diff;
@@ -123,9 +121,7 @@ size_t part1(bool increasingCost = false) {
   // std::cout << positions << '\n';
 
   return std::min_element(positions.begin(), positions.end(),
-                          [](const auto& lhs, const auto& rhs) {
-                            return lhs.second < rhs.second;
-                          })
+                          [](const auto& lhs, const auto& rhs) { return lhs.second < rhs.second; })
       ->second;
 }
 

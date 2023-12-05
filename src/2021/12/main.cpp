@@ -86,12 +86,10 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
 
 std::string readFile(const std::string& filename = "input.txt") {
   std::ifstream file{filename};
-  return {(std::istreambuf_iterator<char>(file)),
-          std::istreambuf_iterator<char>()};
+  return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
 }
 
-std::vector<std::string> split(const std::string& str,
-                               const std::string& delim = " ") {
+std::vector<std::string> split(const std::string& str, const std::string& delim = " ") {
   std::vector<std::string> v{};
   size_t start = 0;
   size_t end = 0;
@@ -113,14 +111,12 @@ std::vector<size_t> strVecToNumVec(const std::vector<std::string>& strVec) {
   return numVec;
 }
 
-std::pair<std::string, std::string> strVecToStrPair(
-    const std::vector<std::string>& strVec) {
+std::pair<std::string, std::string> strVecToStrPair(const std::vector<std::string>& strVec) {
   assert(strVec.size() == 2);
   return {strVec[0], strVec[1]};
 }
 
-std::pair<size_t, size_t> strVecToNumPair(
-    const std::vector<std::string>& strVec) {
+std::pair<size_t, size_t> strVecToNumPair(const std::vector<std::string>& strVec) {
   const auto v = strVecToNumVec(strVec);
   assert(v.size() == 2);
   return {v[0], v[1]};
@@ -144,9 +140,8 @@ std::unordered_map<std::string, std::set<std::string>> parseFile() {
   const auto lines = split(raw, "\n");
 
   std::vector<std::pair<std::string, std::string>> data{};
-  std::transform(
-      lines.begin(), lines.end(), std::back_inserter(data),
-      [](const auto& line) { return strVecToStrPair(split(line, "-")); });
+  std::transform(lines.begin(), lines.end(), std::back_inserter(data),
+                 [](const auto& line) { return strVecToStrPair(split(line, "-")); });
 
   std::unordered_map<std::string, std::set<std::string>> edges{};
   for (auto& [node1, node2] : data) {
@@ -170,8 +165,7 @@ size_t part1(bool visitLowerTwice = false) {
   auto edges = parseFile();
 
   const auto strIsLower = [](const std::string& s) {
-    return std::all_of(s.begin(), s.end(),
-                       [](const char& c) { return std::islower(c); });
+    return std::all_of(s.begin(), s.end(), [](const char& c) { return std::islower(c); });
   };
 
   std::vector<std::vector<std::string>> options{{"start"}};
@@ -188,10 +182,8 @@ size_t part1(bool visitLowerTwice = false) {
       } else {
         for (const auto& node : edges[current]) {
           if ((node != "start") &&
-              !(strIsLower(node) &&
-                std::count(option.begin(), option.end(), node) &&
-                (!visitLowerTwice ||
-                 std::count(option.begin(), option.end(), "secondvisit")))) {
+              !(strIsLower(node) && std::count(option.begin(), option.end(), node) &&
+                (!visitLowerTwice || std::count(option.begin(), option.end(), "secondvisit")))) {
             std::vector<std::string> newOption{option.begin(), option.end()};
 
             if (visitLowerTwice && strIsLower(node) &&

@@ -23,22 +23,18 @@ template <typename T>
 concept Container = std::ranges::range<T>;
 
 template <typename T>
-concept ContainerArithmetic =
-    Container<T> && std::is_arithmetic_v<typename T::value_type>;
+concept ContainerArithmetic = Container<T> && std::is_arithmetic_v<typename T::value_type>;
 
 template <typename T>
-concept ContainerString =
-    Container<T> && std::same_as<typename T::value_type, std::string>;
+concept ContainerString = Container<T> && std::same_as<typename T::value_type, std::string>;
 
 template <typename T>
 concept PairSameType =
-    std::same_as<T,
-                 std::pair<typename T::first_type, typename T::second_type>> &&
+    std::same_as<T, std::pair<typename T::first_type, typename T::second_type>> &&
     std::same_as<typename T::first_type, typename T::second_type>;
 
 template <typename T>
-concept PairArithmetic =
-    PairSameType<T> && std::is_arithmetic_v<typename T::first_type>;
+concept PairArithmetic = PairSameType<T> && std::is_arithmetic_v<typename T::first_type>;
 
 ///// specializations /////
 
@@ -61,17 +57,15 @@ template <class ToType, class FromType>
 ToType to(const FromType& from) {
   ToType vec{};
 
-  std::transform(
-      from.begin(), from.end(), std::back_inserter(vec),
-      [](const auto& s) { return to<typename ToType::value_type>(s); });
+  std::transform(from.begin(), from.end(), std::back_inserter(vec),
+                 [](const auto& s) { return to<typename ToType::value_type>(s); });
 
   return vec;
 }
 
 template <class ToType, class FromType>
   requires PairSameType<ToType> && Container<FromType> &&
-           std::same_as<typename ToType::first_type,
-                        typename FromType::value_type>
+           std::same_as<typename ToType::first_type, typename FromType::value_type>
 ToType to(const FromType& from) {
   assert(from.size() == 2);
   return {from[0], from[1]};
@@ -91,7 +85,5 @@ ToType to(const FromType& from) {
   std::transform(from.begin(), from.end(), std::back_inserter(vec),
                  [](const char& c) { return std::string(1, c); });
 
-  return to<ToType>(
-      const_cast<std::add_lvalue_reference_t<std::add_const_t<decltype(vec)>>>(
-          vec));
+  return to<ToType>(const_cast<std::add_lvalue_reference_t<std::add_const_t<decltype(vec)>>>(vec));
 }

@@ -69,12 +69,10 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
 
 std::string readFile(const std::string& filename = "input.txt") {
   std::ifstream file{filename};
-  return {(std::istreambuf_iterator<char>(file)),
-          std::istreambuf_iterator<char>()};
+  return {(std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>()};
 }
 
-std::vector<std::string> split(const std::string& str,
-                               const std::string& delim = " ") {
+std::vector<std::string> split(const std::string& str, const std::string& delim = " ") {
   std::vector<std::string> v{};
   size_t start = 0;
   size_t end = 0;
@@ -129,9 +127,8 @@ std::vector<std::vector<size_t>> parseFile() {
 size_t part1(size_t steps = 100, bool returnAllFlashed = false) {
   auto grid = parseFile();
 
-  const auto increment = [&grid](
-                             size_t r, size_t c,
-                             const std::vector<std::vector<bool>>& flashed) {
+  const auto increment = [&grid](size_t r, size_t c,
+                                 const std::vector<std::vector<bool>>& flashed) {
     if ((r < grid.size()) && (c < grid[r].size())) {
       if (!flashed[r][c]) {
         ++grid[r][c];
@@ -147,9 +144,8 @@ size_t part1(size_t steps = 100, bool returnAllFlashed = false) {
     }
   };
 
-  const auto flash = [&grid, &increment](
-                         size_t r, size_t c,
-                         std::vector<std::vector<bool>>& flashed) {
+  const auto flash = [&grid, &increment](size_t r, size_t c,
+                                         std::vector<std::vector<bool>>& flashed) {
     flashed[r][c] = true;
     grid[r][c] = 0;
     increment(r - 1, c, flashed);
@@ -166,12 +162,10 @@ size_t part1(size_t steps = 100, bool returnAllFlashed = false) {
     // std::cout << flashed << '\n';
 
     return std::accumulate(
-        flashed.begin(), flashed.end(), 0UL,
-        [](const auto& sum, const auto& row) {
-          return sum + std::accumulate(row.begin(), row.end(), 0UL,
-                                       [](const auto& sumRow, const auto& f) {
-                                         return sumRow + f;
-                                       });
+        flashed.begin(), flashed.end(), 0UL, [](const auto& sum, const auto& row) {
+          return sum +
+                 std::accumulate(row.begin(), row.end(), 0UL,
+                                 [](const auto& sumRow, const auto& f) { return sumRow + f; });
         });
   };
 
@@ -205,8 +199,7 @@ size_t part1(size_t steps = 100, bool returnAllFlashed = false) {
 
   const auto allFlashed = [&grid]() {
     return std::all_of(grid.begin(), grid.end(), [](const auto& row) {
-      return std::all_of(row.begin(), row.end(),
-                         [](const auto& e) { return e == 0; });
+      return std::all_of(row.begin(), row.end(), [](const auto& e) { return e == 0; });
     });
   };
 

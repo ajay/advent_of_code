@@ -3,8 +3,7 @@
 #include <gtest/gtest.h>
 
 TEST(ToTest, toArithmeticfromString) {
-  constexpr auto test = []<typename T>(const std::string& from,
-                                       const T& expected) {
+  constexpr auto test = []<typename T>(const std::string& from, const T& expected) {
     EXPECT_EQ(to<T>(from), expected);
   };
 
@@ -45,9 +44,8 @@ TEST(ToTest, toArithmeticVectorfromStringVector) {
   test({" 1", " 2", " 3"}, std::vector<size_t>{1, 2, 3});
   test({" 1 ", " 2 ", " 3 "}, std::vector<size_t>{1, 2, 3});
 
-  test({"-1", "-2", "-3"},
-       std::vector<size_t>{static_cast<size_t>(-1), static_cast<size_t>(-2),
-                           static_cast<size_t>(-3)});
+  test({"-1", "-2", "-3"}, std::vector<size_t>{static_cast<size_t>(-1), static_cast<size_t>(-2),
+                                               static_cast<size_t>(-3)});
 
   test({"1", "2", "3"}, std::vector<float>{1., 2., 3.});
   test({"1", "2", "3"}, std::vector<double>{1., 2., 3.});
@@ -84,8 +82,7 @@ TEST(ToTest, toPairArithmeticfromContainerString) {
 }
 
 TEST(ToTest, toContainerArithmeticfromString) {
-  constexpr auto test = []<typename T>(const std::string& from,
-                                       const std::vector<T>& expected) {
+  constexpr auto test = []<typename T>(const std::string& from, const std::vector<T>& expected) {
     EXPECT_EQ((to<std::vector<T>>(from)), expected);
   };
 
