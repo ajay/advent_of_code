@@ -1,6 +1,7 @@
 #include "lib/parse.h"
 
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include <gtest/gtest.h>
@@ -15,5 +16,13 @@ TEST(ParseTest, split) {
 }
 
 TEST(ParseTest, splitDefaultArgs) {
-  EXPECT_EQ(split(std::move("hello world")), split("hello world", " "));
+  EXPECT_EQ(split("hello world"), split("hello world", " "));
+}
+
+TEST(ParseTest, splitToPair) {
+  EXPECT_EQ((splitTo<std::pair<std::string, std::string>>("hello world")),
+            (std::pair<std::string, std::string>{"hello", "world"}));
+
+  EXPECT_EQ((splitTo<std::pair<std::string, std::string>>("hello world")),
+            (splitToPair("hello world")));
 }

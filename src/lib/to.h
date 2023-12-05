@@ -39,7 +39,21 @@ concept PairArithmetic = PairSameType<T> && std::is_arithmetic_v<typename T::fir
 ///// specializations /////
 
 template <class ToType, class FromType>
-  requires std::is_arithmetic_v<ToType> && std::same_as<FromType, std::string>
+  requires std::same_as<std::remove_cv_t<ToType>, std::string> &&
+           std::same_as<std::remove_cv_t<FromType>, std::string>
+ToType to(const FromType& from) {
+  return from;
+}
+
+template <class ToType, class FromType>
+  requires std::same_as<std::remove_cv_t<ToType>, std::string> &&
+           std::same_as<std::remove_cv_t<FromType>, std::string>
+ToType to(FromType&& from) {
+  return std::move(from);
+}
+
+template <class ToType, class FromType>
+  requires std::is_arithmetic_v<ToType> && std::same_as<std::remove_cv_t<FromType>, std::string>
 ToType to(const FromType& from) {
   if constexpr (std::is_integral_v<ToType>) {
     if constexpr (std::is_unsigned_v<ToType>) {
@@ -69,6 +83,14 @@ template <class ToType, class FromType>
 ToType to(const FromType& from) {
   assert(from.size() == 2);
   return {from[0], from[1]};
+}
+
+template <class ToType, class FromType>
+  requires PairSameType<ToType> && Container<FromType> &&
+           std::same_as<typename ToType::first_type, typename FromType::value_type>
+ToType to(FromType&& from) {
+  assert(from.size() == 2);
+  return {std::move(from[0]), std::move(from[1])};
 }
 
 template <class ToType, class FromType>
