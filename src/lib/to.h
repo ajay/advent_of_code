@@ -67,6 +67,20 @@ ToType to(const FromType& from) {
 }
 
 template <class ToType, class FromType>
+  requires std::is_arithmetic_v<ToType> && std::same_as<std::remove_cv_t<FromType>, std::string>
+ToType to(FromType&& from) {
+  if constexpr (std::is_integral_v<ToType>) {
+    if constexpr (std::is_unsigned_v<ToType>) {
+      return static_cast<ToType>(std::stoull(from));
+    } else {
+      return static_cast<ToType>(std::stoll(from));
+    }
+  } else if constexpr (std::is_floating_point_v<ToType>) {
+    return static_cast<ToType>(std::stold(from));
+  }
+}
+
+template <class ToType, class FromType>
   requires ContainerArithmetic<ToType> && ContainerString<FromType>
 ToType to(const FromType& from) {
   ToType vec{};
