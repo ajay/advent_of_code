@@ -92,6 +92,17 @@ ToType to(const FromType& from) {
 }
 
 template <class ToType, class FromType>
+  requires ContainerArithmetic<ToType> && ContainerString<FromType>
+ToType to(FromType&& from) {
+  ToType vec{};
+
+  std::transform(from.begin(), from.end(), std::back_inserter(vec),
+                 [](const auto& s) { return to<typename ToType::value_type>(s); });
+
+  return vec;
+}
+
+template <class ToType, class FromType>
   requires PairSameType<ToType> && Container<FromType> &&
            std::same_as<typename ToType::first_type, typename FromType::value_type>
 ToType to(const FromType& from) {

@@ -15,7 +15,7 @@ std::vector<std::string> split(std::string&& str,
     boost::trim(str);
   }
 
-  boost::split(v, str, boost::is_any_of(delim));
+  boost::split(v, str, boost::is_any_of(delim), boost::algorithm::token_compress_on);
 
   if (trimSplit) {
     for (auto& s : v) {
