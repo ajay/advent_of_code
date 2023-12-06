@@ -9,6 +9,9 @@
 #include <tuple>
 #include <vector>
 
+#include <fmt/core.h>
+#include <fmt/ranges.h>
+
 ///// interface /////
 
 template <class ToType, class FromType>
@@ -106,7 +109,12 @@ template <class ToType, class FromType>
   requires PairSameType<ToType> && Container<FromType> &&
            std::same_as<typename ToType::first_type, typename FromType::value_type>
 ToType to(const FromType& from) {
-  assert(from.size() == 2);
+  if (from.size() != 2) {
+    throw std::runtime_error(
+        fmt::format("Can not construct pair (size=2) from container (actual_size={}): '{}' ",
+                    from.size(), fmt::join(from, ",")));
+  }
+
   return {from[0], from[1]};
 }
 
@@ -114,7 +122,12 @@ template <class ToType, class FromType>
   requires PairSameType<ToType> && Container<FromType> &&
            std::same_as<typename ToType::first_type, typename FromType::value_type>
 ToType to(FromType&& from) {
-  assert(from.size() == 2);
+  if (from.size() != 2) {
+    throw std::runtime_error(
+        fmt::format("Can not construct pair (size=2) from container (actual_size={}): '{}' ",
+                    from.size(), fmt::join(from, ",")));
+  }
+
   return {std::move(from[0]), std::move(from[1])};
 }
 
