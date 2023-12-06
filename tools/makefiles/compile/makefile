@@ -48,9 +48,11 @@ CC  = clang-16
 CXX = clang++-16
 
 CPPFLAGS  = -MMD
+CPPFLAGS += -Ofast
 CPPFLAGS += -Wall
 CPPFLAGS += -Werror
 CPPFLAGS += -Weverything
+CPPFLAGS += -Wno-exit-time-destructors
 CPPFLAGS += -Wno-gnu-zero-variadic-macro-arguments
 CPPFLAGS += -Wno-missing-prototypes
 CPPFLAGS += -fPIC
@@ -63,7 +65,8 @@ CXXFLAGS  = -std=gnu++2b
 CXXFLAGS += -Wno-c++98-compat
 CXXFLAGS += -Wno-c++98-compat-pedantic
 
-LDFLAGS = -pie
+LDFLAGS  = -pie
+LDFLAGS += -lboost_regex
 
 LIBS = -lfmt
 
@@ -142,7 +145,7 @@ $(TARGET): $(OBJS)
 
 run: $(TARGET)
 	$(Q) $(ECHO) '(RUN)' $<
-	$(Q) $(TARGET) $(RUN_FLAGS)
+	$(Q) time $(TARGET) $(RUN_FLAGS)
 
 clean:
 	$(Q) rm -rf $(BUILD_DIR)

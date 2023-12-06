@@ -4,9 +4,11 @@
 #include <cassert>
 
 #include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string_regex.hpp>
 
 std::vector<std::string> split(std::string&& str,
                                const std::string& delim,
+                               bool delimMultiChar,
                                bool trimOriginal,
                                bool trimSplit) {
   std::vector<std::string> v{};
@@ -15,7 +17,11 @@ std::vector<std::string> split(std::string&& str,
     boost::trim(str);
   }
 
-  boost::split(v, str, boost::is_any_of(delim), boost::algorithm::token_compress_on);
+  if (delimMultiChar) {
+    boost::algorithm::split_regex(v, str, boost::regex(delim));
+  } else {
+    boost::split(v, str, boost::is_any_of(delim), boost::algorithm::token_compress_on);
+  }
 
   if (trimSplit) {
     for (auto& s : v) {
