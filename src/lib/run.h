@@ -6,6 +6,7 @@
 
 template <class Function, class Result>
 void run_(const std::source_location& location,
+          const std::string& comparison,
           size_t part,
           const Function& fn,
           bool example,
@@ -18,7 +19,8 @@ void run_(const std::source_location& location,
              (example ? "example:" : "input:"), result);
 
   if (result != expected) {
-    const auto error = fmt::format("result ({}) != expected ({})", result, expected);
+    const auto error = fmt::format("Failed comparison: 'run({})'\n  result ({}) != expected ({})",
+                                   comparison, result, expected);
     throw std::runtime_error(error);
   }
 }
@@ -26,4 +28,4 @@ void run_(const std::source_location& location,
 // Macro to get around clang15 std::source_location bug, fixed in clang16+ (not
 // easily available as of July 2023). See
 // github.com/llvm/llvm-project/issues/56379.
-#define run(...) run_(std::source_location::current(), ##__VA_ARGS__)
+#define run(Args...) run_(std::source_location::current(), #Args, Args)

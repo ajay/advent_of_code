@@ -55,6 +55,8 @@ CPPFLAGS += -Weverything
 CPPFLAGS += -Wno-exit-time-destructors
 CPPFLAGS += -Wno-gnu-zero-variadic-macro-arguments
 CPPFLAGS += -Wno-missing-prototypes
+CPPFLAGS += -Wno-pedantic
+CPPFLAGS += -Wno-variadic-macros
 CPPFLAGS += -fPIC
 CPPFLAGS += $(INCLUDE_DIRS)
 
