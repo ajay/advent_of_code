@@ -157,6 +157,7 @@ size_t part1(const std::string& path) {
   };
 
   for (size_t r = 0; r < grid.size(); ++r) {
+    state = {};
     for (size_t c = 0; c < grid[r].size(); ++c) {
       const auto& ch = grid[r][c];
 
@@ -167,7 +168,7 @@ size_t part1(const std::string& path) {
         };
         check(r, c);
       } else if (state.isNum) {
-        if ((c == 0) || !(std::isdigit(ch))) {
+        if (!std::isdigit(ch)) {
           if (state.symbol) {
             sum += state.num;
           }
@@ -177,6 +178,10 @@ size_t part1(const std::string& path) {
           check(r, c);
         }
       }
+    }
+
+    if (state.symbol) {
+      sum += state.num;
     }
   }
 
