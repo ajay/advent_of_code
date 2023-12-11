@@ -56,6 +56,32 @@ ToType to(FromType&& from) {
 }
 
 template <class ToType, class FromType>
+  requires std::same_as<std::remove_cv_t<ToType>, std::vector<std::string::value_type>> &&
+           std::same_as<std::remove_cv_t<FromType>, std::string>
+ToType to(const FromType& from) {
+  ToType ret{};
+
+  for (const auto& ch : from) {
+    ret.emplace_back(ch);
+  }
+
+  return ret;
+}
+
+template <class ToType, class FromType>
+  requires std::same_as<std::remove_cv_t<ToType>, std::vector<std::string::value_type>> &&
+           std::same_as<std::remove_cv_t<FromType>, std::string>
+ToType to(FromType&& from) {
+  ToType ret{};
+
+  for (auto&& ch : from) {
+    ret.emplace_back(std::move(ch));
+  }
+
+  return ret;
+}
+
+template <class ToType, class FromType>
   requires std::is_arithmetic_v<ToType> && std::same_as<std::remove_cv_t<FromType>, std::string>
 ToType to(const FromType& from) {
   if constexpr (std::is_integral_v<ToType>) {
