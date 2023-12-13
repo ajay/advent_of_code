@@ -17,7 +17,6 @@ MAKEFLAGS ?=
 MAKEFLAGS += -rR                        # do not use make's built-in rules and variables
 MAKEFLAGS += -j$(shell nproc)           # parallel processing
 MAKEFLAGS += -k                         # keep going on errors
-MAKEFLAGS += --output-sync=recurse      # group output messages per recursive make call
 MAKEFLAGS += --warn-undefined-variables
 
 ifeq ($(MAKECMDGOALS), rebuild)
