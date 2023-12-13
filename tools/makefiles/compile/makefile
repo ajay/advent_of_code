@@ -53,6 +53,7 @@ CPPFLAGS += -Wall
 CPPFLAGS += -Werror
 CPPFLAGS += -Weverything
 CPPFLAGS += -Wno-exit-time-destructors
+CPPFLAGS += -Wno-global-constructors
 CPPFLAGS += -Wno-gnu-zero-variadic-macro-arguments
 CPPFLAGS += -Wno-missing-prototypes
 CPPFLAGS += -Wno-pedantic
@@ -63,7 +64,7 @@ CPPFLAGS += $(INCLUDE_DIRS)
 CFLAGS  = -std=c17
 CFLAGS += -fgnu89-inline
 
-CXXFLAGS  = -std=gnu++2b
+CXXFLAGS  = -std=gnu++20
 CXXFLAGS += -Wno-c++98-compat
 CXXFLAGS += -Wno-c++98-compat-pedantic
 
