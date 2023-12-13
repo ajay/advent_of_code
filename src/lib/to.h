@@ -32,6 +32,15 @@ template <typename T>
 concept ContainerString = Container<T> && std::same_as<typename T::value_type, std::string>;
 
 template <typename T>
+concept Enum = std::is_enum_v<T>;
+
+template <typename T>
+concept EnumArithmetic = Enum<T> && std::is_arithmetic_v<std::underlying_type_t<T>>;
+
+template <typename T>
+concept EnumChar = Enum<T> && std::same_as<char, std::underlying_type_t<T>>;
+
+template <typename T>
 concept PairSameType =
     std::same_as<T, std::pair<typename T::first_type, typename T::second_type>> &&
     std::same_as<typename T::first_type, typename T::second_type>;
@@ -53,6 +62,18 @@ template <class ToType, class FromType>
            std::same_as<std::remove_cv_t<FromType>, std::string>
 ToType to(FromType&& from) {
   return std::move(from);
+}
+
+template <class ToType, class FromType>
+  requires EnumArithmetic<FromType> && std::same_as<ToType, char>
+ToType to(const FromType& from) {
+  return static_cast<ToType>(from);
+}
+
+template <class ToType, class FromType>
+  requires EnumArithmetic<FromType> && std::same_as<ToType, char>
+ToType to(FromType&& from) {
+  return static_cast<ToType>(from);
 }
 
 template <class ToType, class FromType>
