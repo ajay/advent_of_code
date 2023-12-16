@@ -15,12 +15,15 @@
 ///// interface /////
 
 template <class ToType, class FromType>
-ToType to(const FromType& from);
+constexpr ToType to(const FromType& from);
 
 template <class ToType, class FromType>
-ToType to(FromType&& from);
+constexpr ToType to(FromType&& from);
 
 ///// concepts /////
+
+template <typename T>
+concept Arithmetic = std::is_arithmetic_v<std::remove_cv_t<T>>;
 
 template <typename T>
 concept Container = std::ranges::range<T>;
@@ -32,13 +35,10 @@ template <typename T>
 concept ContainerString = Container<T> && std::same_as<typename T::value_type, std::string>;
 
 template <typename T>
-concept Enum = std::is_enum_v<T>;
+concept Enum = std::is_enum_v<std::remove_cv_t<T>>;
 
 template <typename T>
 concept EnumArithmetic = Enum<T> && std::is_arithmetic_v<std::underlying_type_t<T>>;
-
-template <typename T>
-concept EnumChar = Enum<T> && std::same_as<char, std::underlying_type_t<T>>;
 
 template <typename T>
 concept PairSameType =
@@ -65,14 +65,14 @@ ToType to(FromType&& from) {
 }
 
 template <class ToType, class FromType>
-  requires EnumArithmetic<FromType> && std::same_as<ToType, char>
-ToType to(const FromType& from) {
+  requires EnumArithmetic<FromType> && Arithmetic<ToType>
+constexpr ToType to(const FromType& from) {
   return static_cast<ToType>(from);
 }
 
 template <class ToType, class FromType>
-  requires EnumArithmetic<FromType> && std::same_as<ToType, char>
-ToType to(FromType&& from) {
+  requires EnumArithmetic<FromType> && Arithmetic<ToType>
+constexpr ToType to(FromType&& from) {
   return static_cast<ToType>(from);
 }
 
