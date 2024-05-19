@@ -5,7 +5,7 @@ include tools/makefiles/subdir/makefile
 
 ################################################################################
 
-CXX_FORMATTER = $(shell command -v clang-format-16 &> /dev/null && echo "clang-format-16" || echo "clang-format")
+CXX_FORMATTER = $(shell command -v clang-format-17 &> /dev/null && echo "clang-format-17" || echo "clang-format")
 
 CXX_FORMATTER_FLAGS += --style='{BasedOnStyle: Chromium, ColumnLimit: 100}'
 CXX_FORMATTER_FLAGS += --Werror

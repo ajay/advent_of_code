@@ -43,8 +43,8 @@ endif
 
 ################################################################################
 
-CC  = clang-16
-CXX = clang++-16
+CC  = clang-17
+CXX = clang++-17
 
 CPPFLAGS  = -MMD
 CPPFLAGS += -Ofast

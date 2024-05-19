@@ -64,12 +64,12 @@ size_t Record::countUnknownCombinations(const std::string& line, const std::vect
     return it->second;
   }
 
-  const auto returnAndCache = [key{std::move(key)}](size_t ret) {
-    if (const auto it = combinationsCache_.find(key); it != combinationsCache_.end()) {
+  const auto returnAndCache = [cachedKey{std::move(key)}](size_t ret) {
+    if (const auto it = combinationsCache_.find(cachedKey); it != combinationsCache_.end()) {
       assert(false);
     }
 
-    combinationsCache_.emplace(key, ret);
+    combinationsCache_.emplace(cachedKey, ret);
     return ret;
   };
 
