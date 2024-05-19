@@ -1,6 +1,10 @@
 name: CI
 
-on: push
+on:
+  push:
+  schedule:
+  - cron: '0 0 * * *'  # daily at 00:00
+
 
 jobs:
   build_and_test:
