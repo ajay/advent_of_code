@@ -1,5 +1,11 @@
 ################################################################################
 
+REPO_ROOT := $(shell git rev-parse --show-toplevel)
+
+include $(REPO_ROOT)/tools/build-tools/makefiles/help.mk
+
+################################################################################
+
 PROJECT_NAME = $(notdir $(CURDIR))
 
 $(info )
@@ -54,17 +60,9 @@ all: $(SUB_TARGET_DIRS)
 
 help::
 	$(Q) $(ECHO)
-	$(Q) $(ECHO) 'make                    - recursively make subdirs'
-	$(Q) $(ECHO) '  suppress_echo=<true>  - optional, default is false'
-	$(Q) $(ECHO) '  verbose=<true>        - optional, default is false'
-	$(Q) $(ECHO)
-	$(Q) $(ECHO) 'make run                - recursively run subdirs'
-	$(Q) $(ECHO)
-	$(Q) $(ECHO) 'make clean              - recursively clean subdirs'
-	$(Q) $(ECHO)
-	$(Q) $(ECHO) 'make rebuild            - recursively rebuild subdirs'
-	$(Q) $(ECHO)
-	$(Q) $(ECHO) 'make help               - this info'
+	$(Q) $(ECHO) 'OPTIONS'
+	$(Q) $(ECHO) '  suppress_echo=<true>           optional, default is false'
+	$(Q) $(ECHO) '  verbose=<true>                 optional, default is false'
 	$(Q) $(ECHO)
 
 

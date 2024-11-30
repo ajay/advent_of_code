@@ -26,24 +26,6 @@ OS := $(shell lsb_release --id | awk '{print $$3}' | tr A-Z a-z)
 
 ################################################################################
 
-help::
-	$(Q) $(ECHO) 'make install-deps       - install deps'
-	$(Q) $(ECHO)
-	$(Q) $(ECHO) 'make ci                 - ci'
-	$(Q) $(ECHO)
-	$(Q) $(ECHO) 'make lint               - lint'
-	$(Q) $(ECHO)
-	$(Q) $(ECHO) 'make format             - format'
-	$(Q) $(ECHO)
-	$(Q) $(ECHO) 'make versions           - prints tool versions'
-	$(Q) $(ECHO)
-	$(Q) $(ECHO) 'make setup-day          - sets up a skeleton for an aoc day'
-	$(Q) $(ECHO) '  year=<XXXX>           - required, integer'
-	$(Q) $(ECHO) '  day=<XX>              - required, integer'
-	$(Q) $(ECHO)
-
-################################################################################
-
 year ?=
 day ?=
 
