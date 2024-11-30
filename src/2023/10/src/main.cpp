@@ -132,9 +132,8 @@ std::vector<PointStep> searchLoop(const std::vector<std::string>& grid,
 
       const auto checkNeighbor = [&queue, &steps, &checkOrigin](const Point& p,
                                                                 const std::vector<Pipe>& pipes) {
-        checkOrigin(p, pipes, [&queue, &steps](const auto& pt) {
-          queue.emplace(PointStep{pt, steps + 1});
-        });
+        checkOrigin(p, pipes,
+                    [&queue, &steps](const auto& pt) { queue.emplace(PointStep{pt, steps + 1}); });
       };
 
       if (checkOrigin(point, {Pipe::Start, Pipe::Vertical, Pipe::NorthEast, Pipe::NorthWest})) {
