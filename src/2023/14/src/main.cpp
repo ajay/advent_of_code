@@ -59,6 +59,11 @@ class Platform final {
     while (movement) {
       movement = false;
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wswitch-default"
+#endif
+
       switch (direction) {
         case Direction::North:
           for (size_t r = 1; r < grid_.size(); ++r) {
@@ -89,6 +94,10 @@ class Platform final {
           }
           break;
       }
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
     }
   }
 

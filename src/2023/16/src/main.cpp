@@ -40,6 +40,11 @@ struct Beam {
   std::optional<Beam> updateDirection(const Tile& tile) {
     std::optional<Beam> beamSplit{};
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wswitch-default"
+#endif
+
     switch (tile) {
       case Tile::Empty:
         break;
@@ -123,6 +128,10 @@ struct Beam {
         ++x;
         break;
     }
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 
     if (log) {
       fmt::print("({}, {})\n", x, y);

@@ -145,7 +145,7 @@ size_t part1(const std::string& path) {
     size_t num = 0;
     bool isNum = false;
     bool symbol = false;
-    uint8_t _reserved[6];
+    uint8_t _reserved[6] = {0};
   } state;
 
   const auto grid = readFile(path);

@@ -45,8 +45,8 @@ std::vector<std::vector<char>> readFile(const std::string& path) {
 
 struct GridExpanded {
   std::vector<std::vector<char>> grid;
-  std::vector<size_t> expandedRows;
-  std::vector<size_t> expandedCols;
+  std::vector<size_t> expandedRows = {};
+  std::vector<size_t> expandedCols = {};
 };
 
 GridExpanded expandGrid(std::vector<std::vector<char>>&& gridInner,

@@ -27,6 +27,7 @@ Network readFile(const std::string& path) {
 
   Network network = {
       .instructions = std::move(instructionsString),
+      .nodes = {},
   };
 
   for (const auto& nodeString : split(std::move(nodesString), "\n")) {
