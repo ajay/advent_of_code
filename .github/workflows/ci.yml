@@ -9,7 +9,9 @@ jobs:
   build_and_test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'true'
       - name: Install deps
         run: make install-deps
       - name: Run CI
