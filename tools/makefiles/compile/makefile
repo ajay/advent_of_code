@@ -51,6 +51,7 @@ CPPFLAGS += -Ofast
 CPPFLAGS += -Wall
 CPPFLAGS += -Werror
 CPPFLAGS += -Weverything
+CPPFLAGS += -Wno-covered-switch-default
 CPPFLAGS += -Wno-exit-time-destructors
 CPPFLAGS += -Wno-global-constructors
 CPPFLAGS += -Wno-gnu-zero-variadic-macro-arguments
