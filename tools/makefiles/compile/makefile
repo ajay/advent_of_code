@@ -155,6 +155,18 @@ clean:
 
 rebuild: clean all
 
+iwyu:
+	$(Q) : $(foreach SRC,$(SRCS),   \
+		&& include-what-you-use     \
+		$(CPPFLAGS) $(CXXFLAGS)     \
+		-Xiwyu --comment_style=long \
+		-Xiwyu --error              \
+		-Xiwyu --no_fwd_decls       \
+		$(SRC)                      \
+	)
+
+lint: iwyu
+
 versions:
 	$(call print_tool_version,CC,$(CC))
 	$(call print_tool_version,CXX,$(CXX))

@@ -1,10 +1,20 @@
 #include "parse.h"
 
 #include <algorithm>
-#include <cassert>
+#include <map>
 
-#include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string_regex.hpp>
+#include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/constants.hpp>
+#include <boost/algorithm/string/detail/classification.hpp>
+#include <boost/algorithm/string/regex.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/trim.hpp>
+#include <boost/iterator/iterator_facade.hpp>
+#include <boost/regex/v5/basic_regex.hpp>
+#include <boost/regex/v5/perl_matcher_common.hpp>
+#include <boost/regex/v5/perl_matcher_non_recursive.hpp>
+#include <boost/regex/v5/regex_fwd.hpp>
+#include <boost/regex/v5/regex_traits.hpp>
 
 std::vector<std::string> split(std::string&& str,
                                const std::string& delim,
