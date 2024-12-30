@@ -1,15 +1,14 @@
 // adventofcode.com/2024/day/6
 
-#include <algorithm>
-#include <array>
+#include <cassert>
+#include <cstddef>
+#include <limits>
 #include <numeric>
-#include <regex>
 #include <string>
-#include <string_view>
-#include <unordered_map>
+#include <utility>
 #include <vector>
 
-#include <fmt/core.h>
+// #include <fmt/core.h>
 
 #include "lib/io.h"
 #include "lib/parse.h"

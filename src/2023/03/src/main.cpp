@@ -1,13 +1,17 @@
 // adventofcode.com/2023/day/3
 
+#include <algorithm>
 #include <array>
+#include <cassert>
+#include <cctype>
+#include <cstddef>
+#include <cstdint>
 #include <optional>
 #include <string>
-#include <tuple>
+#include <utility>
 #include <vector>
 
-#include <fmt/core.h>
-#include <fmt/ranges.h>
+// #include <fmt/core.h>
 
 #include "lib/io.h"
 #include "lib/parse.h"
@@ -141,12 +145,13 @@ size_t gearRatio(const std::vector<std::string>& grid, size_t row, size_t col, c
 
 size_t part1(const std::string& path) {
   size_t sum = 0;
-  struct {
+  struct State {
     size_t num = 0;
     bool isNum = false;
     bool symbol = false;
     uint8_t _reserved[6] = {0};
-  } state;
+  };
+  State state;
 
   const auto grid = readFile(path);
 

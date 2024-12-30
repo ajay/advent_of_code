@@ -1,21 +1,22 @@
 // adventofcode.com/2024/day/13
 
 #include <algorithm>
-#include <array>
-#include <cctype>
-#include <list>
+#include <cassert>
+#include <cstddef>
+#include <iterator>
 #include <numeric>
-#include <regex>
 #include <string>
-#include <string_view>
-#include <unordered_map>
+#include <utility>
 #include <vector>
 
-#include <fmt/core.h>
+#include <sys/types.h>
+
+// #include <fmt/core.h>
 
 #include "lib/io.h"
 #include "lib/parse.h"
 #include "lib/run.h"
+#include "lib/to.h"
 
 struct Game final {
   struct Point final {

@@ -1,20 +1,21 @@
 // adventofcode.com/2024/day/16
 
-#include <algorithm>
-#include <array>
-#include <cctype>
-#include <list>
-#include <numeric>
+#include <cassert>
+#include <cstddef>
+#include <deque>
+#include <functional>
+#include <limits>
+#include <map>
 #include <queue>
-#include <regex>
 #include <set>
 #include <string>
-#include <string_view>
-#include <unordered_map>
-#include <unordered_set>
+#include <tuple>
+#include <utility>
 #include <vector>
 
-#include <fmt/core.h>
+#include <sys/types.h>
+
+// #include <fmt/core.h>
 
 #include "lib/io.h"
 #include "lib/parse.h"

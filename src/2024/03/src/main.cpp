@@ -1,19 +1,15 @@
 // adventofcode.com/2024/day/3
 
-#include <algorithm>
-#include <array>
-#include <numeric>
+#include <cassert>
+#include <cstddef>
 #include <regex>
 #include <string>
-#include <string_view>
-#include <unordered_map>
-#include <vector>
 
-#include <fmt/core.h>
+// #include <fmt/core.h>
 
 #include "lib/io.h"
-#include "lib/parse.h"
 #include "lib/run.h"
+#include "lib/to.h"
 
 std::string readFile(const std::string& path) {
   return read(path);

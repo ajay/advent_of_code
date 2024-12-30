@@ -162,6 +162,7 @@ iwyu:
 		-Xiwyu --comment_style=long \
 		-Xiwyu --error              \
 		-Xiwyu --no_fwd_decls       \
+		-Xiwyu --verbose=3          \
 		$(SRC)                      \
 	)
 

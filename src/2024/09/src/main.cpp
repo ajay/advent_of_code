@@ -1,20 +1,20 @@
 // adventofcode.com/2024/day/9
 
-#include <algorithm>
-#include <array>
+#include <cassert>
 #include <cctype>
-#include <numeric>
-#include <regex>
+#include <cstddef>
 #include <string>
-#include <string_view>
-#include <unordered_map>
+#include <utility>
 #include <vector>
 
-#include <fmt/core.h>
+#include <sys/types.h>
+
+// #include <fmt/core.h>
 
 #include "lib/io.h"
 #include "lib/parse.h"
 #include "lib/run.h"
+#include "lib/to.h"
 
 std::vector<std::string> readFile(const std::string& path) {
   return split(read(path), "\n");

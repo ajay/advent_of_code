@@ -1,14 +1,17 @@
 // adventofcode.com/2024/day/2
 
 #include <algorithm>
-#include <array>
+#include <cstddef>
+#include <iterator>
 #include <numeric>
 #include <string>
-#include <string_view>
-#include <unordered_map>
+#include <utility>
 #include <vector>
 
-#include <fmt/core.h>
+#include <bits/std_abs.h>
+#include <sys/types.h>
+
+// #include <fmt/core.h>
 
 #include "lib/io.h"
 #include "lib/parse.h"

@@ -1,28 +1,27 @@
 // adventofcode.com/2024/day/17
 
-#include <algorithm>
-#include <array>
-#include <cctype>
+#include <atomic>
+#include <cassert>
+#include <cstddef>
+#include <cstdint>
+#include <exception>
 #include <execution>
-#include <list>
 #include <numeric>
-#include <queue>
-#include <regex>
-#include <set>
+#include <stdexcept>
 #include <string>
-#include <string_view>
-#include <unordered_map>
-#include <unordered_set>
+#include <utility>
 #include <vector>
 
-#include <fmt/core.h>
-#include <boost/generator_iterator.hpp>
-#include <boost/range/counting_range.hpp>
+#include <sys/types.h>
+
+#include <boost/iterator/iterator_facade.hpp>
 #include <boost/range/irange.hpp>
+// #include <fmt/core.h>
 
 #include "lib/io.h"
 #include "lib/parse.h"
 #include "lib/run.h"
+#include "lib/to.h"
 
 struct Computer {
   size_t a;

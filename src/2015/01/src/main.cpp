@@ -1,5 +1,11 @@
 // adventofcode.com/2015/day/1
 
+#include <cstddef>
+#include <stdexcept>
+#include <string>
+
+#include <sys/types.h>
+
 #include <fmt/core.h>
 
 #include "lib/io.h"

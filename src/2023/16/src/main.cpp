@@ -1,9 +1,15 @@
 // adventofcode.com/2023/day/16
 
+#include <algorithm>
+#include <cassert>
+#include <cstddef>
+#include <cstdint>
+#include <iterator>
 #include <numeric>
 #include <optional>
 #include <string>
 #include <unordered_map>
+#include <utility>
 #include <vector>
 
 #include <fmt/core.h>
@@ -11,7 +17,6 @@
 #include "lib/io.h"
 #include "lib/parse.h"
 #include "lib/run.h"
-#include "lib/to.h"
 
 namespace {
 

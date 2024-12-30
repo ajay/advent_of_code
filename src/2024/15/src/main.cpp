@@ -1,16 +1,9 @@
 // adventofcode.com/2024/day/15
 
-#include <algorithm>
-#include <array>
-#include <cctype>
-#include <list>
-#include <numeric>
-#include <regex>
-#include <set>
+#include <cassert>
+#include <cstddef>
 #include <string>
-#include <string_view>
-#include <unordered_map>
-#include <unordered_set>
+#include <utility>
 #include <vector>
 
 #include <fmt/core.h>

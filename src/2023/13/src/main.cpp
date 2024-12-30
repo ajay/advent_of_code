@@ -1,15 +1,20 @@
 // adventofcode.com/2023/day/12
 
+#include <algorithm>
+#include <cassert>
+#include <cstddef>
+#include <functional>
+#include <iterator>
 #include <numeric>
 #include <string>
+#include <utility>
 #include <vector>
 
-#include <fmt/core.h>
+// #include <fmt/core.h>
 
 #include "lib/io.h"
 #include "lib/parse.h"
 #include "lib/run.h"
-#include "lib/to.h"
 
 namespace {
 

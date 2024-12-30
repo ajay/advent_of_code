@@ -1,11 +1,18 @@
 // adventofcode.com/2023/day/7
 
+#include <algorithm>
+#include <cassert>
+#include <cstddef>
+#include <cstdint>
 #include <functional>
+#include <iterator>
 #include <string>
 #include <unordered_map>
+#include <utility>
 #include <vector>
 
-#include <fmt/core.h>
+// #include <fmt/core.h>
+#include <fmt/format.h>
 
 #include "lib/io.h"
 #include "lib/parse.h"

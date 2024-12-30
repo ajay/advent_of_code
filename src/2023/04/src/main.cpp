@@ -1,14 +1,16 @@
 // adventofcode.com/2023/day/4
 
-#include <array>
+#include <algorithm>
+#include <cassert>
+#include <cstddef>
+#include <iterator>
 #include <numeric>
-#include <optional>
 #include <string>
-#include <tuple>
+#include <utility>
 #include <vector>
 
-#include <fmt/core.h>
-#include <fmt/ranges.h>
+// #include <fmt/core.h>
+#include <fmt/format.h>
 
 #include "lib/io.h"
 #include "lib/parse.h"
