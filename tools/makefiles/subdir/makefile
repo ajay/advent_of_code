@@ -69,4 +69,4 @@ help::
 $(SUB_TARGET_DIRS):
 	$(Q) $(MAKE) -C $@ $(MAKECMDGOALS)
 
-run clean rebuild: all
+run clean rebuild lint: all

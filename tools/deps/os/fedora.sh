@@ -11,5 +11,6 @@ sudo dnf -y install 	\
 	fmt-devel 			\
 	gtest 				\
 	gtest-devel 		\
+	iwyu				\
 	python3 			\
 	python3-pip

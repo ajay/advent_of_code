@@ -13,4 +13,9 @@ chmod +x /tmp/llvm.sh
 sudo /tmp/llvm.sh 18
 sudo apt -y install 	\
 	clang 				\
-	clang-format-18
+	clang-format-18		\
+	libclang-18-dev		\
+	llvm-18-dev
+
+wget --directory-prefix /tmp http://launchpadlibrarian.net/727348130/iwyu_8.22-1_amd64.deb
+sudo dpkg -i /tmp/iwyu_8.22-1_amd64.deb

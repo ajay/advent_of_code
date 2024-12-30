@@ -171,5 +171,6 @@ lint: iwyu
 versions:
 	$(call print_tool_version,CC,$(CC))
 	$(call print_tool_version,CXX,$(CXX))
+	$(call print_tool_version,include-what-you-use,include-what-you-use)
 
 -include $(OBJS:.o=.d) # compiler generated dependency info
