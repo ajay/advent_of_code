@@ -1,6 +1,7 @@
 // adventofcode.com/2024/day/18
 
 #include <cstddef>
+#include <iterator>  // IWYU pragma: keep
 #include <limits>
 #include <queue>
 #include <string>

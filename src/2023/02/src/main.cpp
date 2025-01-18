@@ -14,7 +14,7 @@
 
 #include <sys/types.h>
 
-#include <fmt/core.h>
+#include <fmt/core.h>  // IWYU pragma: keep
 #include <fmt/format.h>
 
 #include "lib/io.h"

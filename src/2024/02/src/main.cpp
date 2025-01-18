@@ -1,6 +1,7 @@
 // adventofcode.com/2024/day/2
 
 #include <algorithm>
+#include <cmath>
 #include <cstddef>
 #include <iterator>
 #include <numeric>
@@ -8,7 +9,6 @@
 #include <utility>
 #include <vector>
 
-#include <bits/std_abs.h>
 #include <sys/types.h>
 
 // #include <fmt/core.h>

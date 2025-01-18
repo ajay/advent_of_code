@@ -6,7 +6,7 @@
 
 #include <sys/types.h>
 
-#include <fmt/core.h>
+#include <fmt/format.h>
 
 #include "lib/io.h"
 #include "lib/run.h"

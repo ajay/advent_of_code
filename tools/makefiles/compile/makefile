@@ -43,11 +43,11 @@ endif
 
 ################################################################################
 
-CC  = clang-18
-CXX = clang++-18
+CC  = clang-19
+CXX = clang++-19
 
 CPPFLAGS  = -MMD
-CPPFLAGS += -Ofast
+CPPFLAGS += -O3
 CPPFLAGS += -Wall
 CPPFLAGS += -Werror
 CPPFLAGS += -Weverything

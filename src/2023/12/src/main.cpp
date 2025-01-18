@@ -11,7 +11,9 @@
 #include <utility>
 #include <vector>
 
-#include <fmt/core.h>
+#if defined __has_include && __has_include("fmt/base.h")
+#include <fmt/base.h>
+#endif
 #include <fmt/format.h>
 
 #include "lib/io.h"

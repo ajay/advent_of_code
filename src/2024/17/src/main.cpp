@@ -5,7 +5,6 @@
 #include <cstddef>
 #include <cstdint>
 #include <exception>
-#include <execution>
 #include <numeric>
 #include <stdexcept>
 #include <string>
@@ -17,6 +16,12 @@
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/range/irange.hpp>
 // #include <fmt/core.h>
+#include <pstl/algorithm_impl.h>
+#include <pstl/execution_defs.h>
+#include <pstl/execution_impl.h>
+#include <pstl/glue_algorithm_impl.h>
+#include <pstl/glue_execution_defs.h>
+#include <pstl/parallel_backend_serial.h>
 
 #include "lib/io.h"
 #include "lib/parse.h"

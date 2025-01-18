@@ -10,8 +10,11 @@
 
 #include <sys/types.h>
 
-#include <fmt/core.h>
-#include <fmt/format.h>
+#if defined __has_include && __has_include("fmt/base.h")
+#include <fmt/base.h>
+#endif
+#include <fmt/core.h>  // IWYU pragma: keep
+#include <fmt/ranges.h>
 
 #include "lib/io.h"
 #include "lib/parse.h"
