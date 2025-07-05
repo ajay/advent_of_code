@@ -7,7 +7,6 @@
 #include <map>
 #include <numeric>
 #include <string>
-#include <type_traits>
 #include <utility>
 #include <vector>
 

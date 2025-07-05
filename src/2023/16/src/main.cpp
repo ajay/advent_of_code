@@ -7,6 +7,7 @@
 #include <iterator>
 #include <numeric>
 #include <optional>
+#include <ranges>
 #include <string>
 #include <unordered_map>
 #include <utility>

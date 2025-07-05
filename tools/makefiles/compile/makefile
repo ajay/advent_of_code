@@ -43,8 +43,8 @@ endif
 
 ################################################################################
 
-CC  = clang-19
-CXX = clang++-19
+CC  = clang-20
+CXX = clang++-20
 
 CPPFLAGS  = -MMD
 CPPFLAGS += -O3
@@ -156,14 +156,14 @@ clean:
 rebuild: clean all
 
 iwyu:
-	$(Q) : $(foreach SRC,$(SRCS),   \
-		&& include-what-you-use     \
-		$(CPPFLAGS) $(CXXFLAGS)     \
-		-Xiwyu --comment_style=long \
-		-Xiwyu --error              \
-		-Xiwyu --no_fwd_decls       \
-		-Xiwyu --verbose=3          \
-		$(SRC)                      \
+	$(Q) : $(foreach SRC,$(SRCS),                             \
+		&& include-what-you-use                               \
+		$(CPPFLAGS) $(CXXFLAGS)                               \
+		-Xiwyu --comment_style=long                           \
+		-Xiwyu --error                                        \
+		-Xiwyu --no_fwd_decls                                 \
+		-isystem $(shell $(CC) --print-resource-dir)/include/ \
+		$(SRC)                                                \
 	)
 
 lint: iwyu
